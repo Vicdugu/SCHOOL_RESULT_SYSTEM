@@ -1,0 +1,447 @@
+.school-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: slideInDown 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.school-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.75) 0%, rgba(118, 75, 162, 0.75) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.school-header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+}
+
+/* Logo Section */
+.logo-section {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-box {
+  width: 120px;
+  height: 120px;
+  background: white;
+  border: 3px dashed #667eea;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-box:hover {
+  border-color: #764ba2;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.logo-box.disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+  border-style: solid;
+  border-color: #bdc3c7;
+}
+
+.logo-box.disabled:hover {
+  border-color: #bdc3c7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: none;
+}
+
+.logo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #667eea;
+  text-align: center;
+  font-weight: 500;
+}
+
+.upload-icon {
+  font-size: 32px;
+}
+
+.upload-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.school-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+  background: white;
+}
+
+.remove-logo-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.logo-box:hover .remove-logo-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.remove-logo-btn:hover {
+  background: #c0392b;
+  transform: scale(1.1);
+}
+
+.upload-message {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+  z-index: 3;
+}
+
+/* Background Control Buttons */
+.bg-control-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.bg-control-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.bg-control-btn:active {
+  transform: translateY(0);
+}
+
+.add-bg-btn {
+  background: rgba(39, 174, 96, 0.3);
+  border-color: rgba(39, 174, 96, 0.6);
+}
+
+.add-bg-btn:hover {
+  background: rgba(39, 174, 96, 0.5);
+  border-color: rgba(39, 174, 96, 0.9);
+}
+
+.remove-bg-btn {
+  background: rgba(231, 76, 60, 0.3);
+  border-color: rgba(231, 76, 60, 0.6);
+}
+
+.remove-bg-btn:hover {
+  background: rgba(231, 76, 60, 0.5);
+  border-color: rgba(231, 76, 60, 0.9);
+}
+
+/* Name Section */
+.name-section {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.name-display-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.school-name {
+  font-size: 42px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.edit-btn {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.edit-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.edit-btn:active {
+  transform: translateY(0);
+}
+
+/* Edit Mode */
+.name-edit-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+.school-name-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px 16px;
+  font-size: 36px;
+  font-weight: 700;
+  border: 3px solid white;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.school-name-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.school-name-input::placeholder {
+  color: #bdc3c7;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.save-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #229954;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.save-btn:active,
+.cancel-btn:active {
+  transform: translateY(0);
+}
+
+/* Dark Mode */
+.dark-mode .school-header {
+  background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .school-header-overlay {
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.75) 0%, rgba(26, 26, 46, 0.75) 100%);
+}
+
+.dark-mode .logo-box {
+  background: #1a1a2e;
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .logo-box:hover {
+  border-color: #764ba2;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.dark-mode .school-logo {
+  background: #2a2a3e;
+}
+
+.dark-mode .upload-icon,
+.dark-mode .upload-text {
+  color: #667eea;
+}
+
+.dark-mode .school-name {
+  color: #ecf0f1;
+}
+
+.dark-mode .school-name-input {
+  background: rgba(42, 42, 62, 0.95);
+  color: #ecf0f1;
+  border-color: #667eea;
+}
+
+.dark-mode .school-name-input::placeholder {
+  color: #95a5a6;
+}
+
+.dark-mode .school-name-input:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .school-header {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .school-header-content {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo-box {
+    width: 100px;
+    height: 100px;
+  }
+
+  .school-name {
+    font-size: 28px;
+  }
+
+  .school-name-input {
+    font-size: 24px;
+  }
+
+  .name-display-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .name-edit-container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .school-name-input {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .school-header {
+    padding: 15px;
+  }
+
+  .school-name {
+    font-size: 22px;
+  }
+
+  .school-name-input {
+    font-size: 18px;
+  }
+
+  .edit-btn,
+  .save-btn,
+  .cancel-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,260 @@
+.profile-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.profile-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.profile-close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-close-btn:hover {
+  color: #333;
+}
+
+.profile-content {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-input,
+.profile-select {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.reg-number-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+.reg-number-input-group:focus-within {
+  border-color: #3498db;
+  background-color: #f8fbfe;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.reg-prefix {
+  font-weight: 600;
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.reg-suffix-input {
+  flex: 1;
+  min-width: 80px;
+  border: none !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  font-size: 14px;
+  font-family: inherit;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.reg-suffix-input:focus {
+  outline: none;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.profile-input:focus,
+.profile-select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  background-color: #f8fbfe;
+}
+
+.profile-select {
+  cursor: pointer;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  padding: 24px;
+  border-top: 2px solid #f0f0f0;
+  justify-content: flex-end;
+}
+
+.profile-close-action-btn {
+  padding: 12px 32px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-close-action-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Dark Mode Styles for PupilProfile */
+.dark-mode .profile-modal {
+  background: #242424;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .profile-header {
+  border-bottom-color: #3a3a3a;
+}
+
+.dark-mode .profile-header h2 {
+  color: #e8e8e8;
+}
+
+.dark-mode .profile-close-btn {
+  color: #666;
+}
+
+.dark-mode .profile-close-btn:hover {
+  color: #e8e8e8;
+}
+
+.dark-mode .profile-field label {
+  color: #e8e8e8;
+}
+
+.dark-mode .profile-input,
+.dark-mode .profile-select {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e8e8e8;
+}
+
+.dark-mode .profile-input:focus,
+.dark-mode .profile-select:focus {
+  border-color: #667eea;
+  background-color: #1a2a3a;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.dark-mode .reg-number-input-group {
+  border-color: #3a3a3a;
+  background-color: #1a1a1a;
+}
+
+.dark-mode .reg-number-input-group:focus-within {
+  border-color: #667eea;
+  background-color: #1a2a3a;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.dark-mode .reg-prefix {
+  color: #999;
+}
+
+.dark-mode .reg-suffix-input {
+  color: #e8e8e8;
+}
+
+.dark-mode .profile-actions {
+  border-top-color: #3a3a3a;
+}
+
+.dark-mode .profile-close-action-btn {
+  background-color: #667eea;
+}
+
+.dark-mode .profile-close-action-btn:hover {
+  background-color: #5568d3;
+}
