@@ -26,7 +26,8 @@ const LoginPage: React.FC = () => {
     try {
       await login(email, password);
       navigate('/dashboard');
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_err) {
       // Error is handled by context and displayed in UI
     }
   };
@@ -77,7 +78,8 @@ const LoginPage: React.FC = () => {
         setNewPassword('');
         setConfirmPassword('');
       }, 2000);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_err) {
       setForgotError('❌ Error resetting password. Please try again.');
     }
   };

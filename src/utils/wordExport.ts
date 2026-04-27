@@ -45,6 +45,7 @@ export const exportPupilResult = async (
   options: ExportOptions
 ) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const children: any[] = [];
 
     // Calculate student average

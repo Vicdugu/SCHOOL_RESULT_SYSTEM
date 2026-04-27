@@ -22,7 +22,7 @@ const ImageCropModal: React.FC<ImageCropModalProps> = ({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
 
   const handleCropComplete = useCallback(
-    (_croppedArea: any, croppedAreaPixels: { x: number; y: number; width: number; height: number }) => {
+    (_croppedArea: { x: number; y: number; width: number; height: number }, croppedAreaPixels: { x: number; y: number; width: number; height: number }) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
     []

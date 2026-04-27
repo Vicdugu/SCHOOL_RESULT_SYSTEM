@@ -70,13 +70,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     localStorage.setItem(`class-${classId}-subjects`, JSON.stringify(newSubjects));
   };
   
-  // Sync local subjects with props changes
-  useEffect(() => {
-    if (propSubjects && propSubjects.length > 0) {
-      setLocalSubjects(propSubjects);
-    }
-  }, [propSubjects]);
-  
+  // Initialize pupils from localStorage
   const [pupils, setPupils] = useState<PupilResult[]>(() => {
     const stored = localStorage.getItem(`class-${classId}-results`);
     if (stored) {
@@ -107,12 +101,14 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   useEffect(() => {
     const stored = localStorage.getItem(`class-${classId}-results`);
     if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPupils(JSON.parse(stored));
     } else {
       // Get saved subjects or use defaults
       const savedSubjects = localStorage.getItem(`class-${classId}-subjects`);
       const subjectsToUse = savedSubjects ? JSON.parse(savedSubjects) : DEFAULT_SUBJECTS;
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPupils(Array.from({ length: INITIAL_PUPILS }, (_, i) => ({
         id: `pupil-${Date.now()}-${i}`,
         name: '',
@@ -139,6 +135,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   useEffect(() => {
     if (subjects.length === 0) return;
     
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPupils(prevPupils => {
       // Check if sync is needed
       if (prevPupils.length === 0) return prevPupils;

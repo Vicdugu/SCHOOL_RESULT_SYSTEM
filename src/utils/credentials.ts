@@ -74,7 +74,7 @@ export const getAllCredentials = (): UserCredential[] => {
   const teachers = savedTeachers ? JSON.parse(savedTeachers) : defaultTeachers;
   
   // Ensure all teachers have the role field set to 'teacher'
-  const normalizedTeachers = teachers.map((teacher: any) => ({
+  const normalizedTeachers = teachers.map((teacher: UserCredential) => ({
     ...teacher,
     role: teacher.role || 'teacher'
   }));

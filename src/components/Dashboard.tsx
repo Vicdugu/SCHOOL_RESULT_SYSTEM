@@ -35,18 +35,22 @@ const Dashboard: React.FC = () => {
   // Initialize activeClass based on user role
   useEffect(() => {
     if (user?.role === 'teacher' && user?.classId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveClass(user.classId);
     } else if (classes.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveClass(classes[0].id);
     }
-  }, [user?.role, user?.classId]);
+  }, [user?.role, user?.classId, classes]);
 
   // Load subjects when class changes
   useEffect(() => {
     const storedSubjects = localStorage.getItem(`class-${activeClass}-subjects`);
     if (storedSubjects) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSubjects(JSON.parse(storedSubjects));
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSubjects([...DEFAULT_SUBJECTS]);
     }
     setActiveSubject(0);

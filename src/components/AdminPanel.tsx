@@ -14,7 +14,6 @@ interface AdminPanelProps {
 }
 
 const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
@@ -27,25 +26,23 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Load teachers from localStorage on mount
-  useEffect(() => {
+  // Initialize with default teachers
+  const getInitialTeachers = (): Teacher[] => {
     const savedTeachers = localStorage.getItem('teacherAccounts');
     if (savedTeachers) {
-      setTeachers(JSON.parse(savedTeachers));
-    } else {
-      // Load default teachers
-      const defaultTeachers: Teacher[] = [
-        { email: 'teacher1@school.com', password: 'Teacher@123', name: 'Teacher 1', role: 'teacher', classId: 1 },
-        { email: 'teacher2@school.com', password: 'Teacher@123', name: 'Teacher 2', role: 'teacher', classId: 2 },
-        { email: 'teacher3@school.com', password: 'Teacher@123', name: 'Teacher 3', role: 'teacher', classId: 3 },
-        { email: 'teacher4@school.com', password: 'Teacher@123', name: 'Teacher 4', role: 'teacher', classId: 4 },
-        { email: 'teacher5@school.com', password: 'Teacher@123', name: 'Teacher 5', role: 'teacher', classId: 5 },
-        { email: 'teacher6@school.com', password: 'Teacher@123', name: 'Teacher 6', role: 'teacher', classId: 6 }
-      ];
-      setTeachers(defaultTeachers);
-      localStorage.setItem('teacherAccounts', JSON.stringify(defaultTeachers));
+      return JSON.parse(savedTeachers);
     }
-  }, []);
+    return [
+      { email: 'teacher1@school.com', password: 'Teacher@123', name: 'Teacher 1', role: 'teacher', classId: 1 },
+      { email: 'teacher2@school.com', password: 'Teacher@123', name: 'Teacher 2', role: 'teacher', classId: 2 },
+      { email: 'teacher3@school.com', password: 'Teacher@123', name: 'Teacher 3', role: 'teacher', classId: 3 },
+      { email: 'teacher4@school.com', password: 'Teacher@123', name: 'Teacher 4', role: 'teacher', classId: 4 },
+      { email: 'teacher5@school.com', password: 'Teacher@123', name: 'Teacher 5', role: 'teacher', classId: 5 },
+      { email: 'teacher6@school.com', password: 'Teacher@123', name: 'Teacher 6', role: 'teacher', classId: 6 }
+    ];
+  };
+
+  const [teachers, setTeachers] = useState<Teacher[]>(getInitialTeachers());
 
   // Save teachers to localStorage whenever they change
   useEffect(() => {
