@@ -608,7 +608,6 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
       )}
       {selectedPupil && (
         <PupilProfile
-          pupilId={selectedPupil.id}
           name={selectedPupil.name}
           sex={selectedPupil.sex}
           registrationNumber={selectedPupil.registrationNumber}

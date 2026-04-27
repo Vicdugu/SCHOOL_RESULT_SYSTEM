@@ -2,7 +2,6 @@ import React from 'react';
 import './PupilProfile.css';
 
 interface PupilProfileProps {
-  pupilId: string;
   name: string;
   sex: string;
   registrationNumber: string;
@@ -11,7 +10,6 @@ interface PupilProfileProps {
 }
 
 const PupilProfile: React.FC<PupilProfileProps> = ({
-  pupilId,
   name,
   sex,
   registrationNumber,

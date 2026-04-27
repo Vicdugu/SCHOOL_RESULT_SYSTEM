@@ -111,7 +111,14 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   };
 
   const handleEdit = (index: number) => {
-    setFormData(teachers[index]);
+    const teacher = teachers[index];
+    setFormData({
+      email: teacher.email,
+      password: teacher.password,
+      name: teacher.name,
+      role: 'teacher',
+      classId: teacher.classId
+    });
     setEditingIndex(index);
     setShowForm(true);
   };

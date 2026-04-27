@@ -34,10 +34,7 @@ const ExportOptionsModal: React.FC<ExportOptionsModalProps> = ({
     }
   };
 
-  const handleReset = () => {
-    setExportMode(null);
-    setSelectedStudentId('');
-  };
+
 
   if (!isOpen) return null;
 

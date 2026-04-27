@@ -1,4 +1,4 @@
-import { Document, Packer, Paragraph, Table, TableCell, TableRow, WidthType, TextRun, AlignmentType, BorderStyle, convertInchesToTwip, ImageRun } from 'docx';
+import { Document, Packer, Paragraph, Table, TableCell, TableRow, WidthType, TextRun, AlignmentType, BorderStyle, ImageRun } from 'docx';
 
 interface SubjectResult {
   name: string;
@@ -54,8 +54,6 @@ export const exportPupilResult = async (
 
     // ============ HEADER SECTION ============
     // Create header with logo on right and school name on left (same line)
-    let headerContent: any[] = [];
-    
     // School name and logo in a table for layout
     // Define bold border style for header and info tables
     const boldBorder = {
@@ -102,7 +100,7 @@ export const exportPupilResult = async (
                         new ImageRun({
                           data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
                           transformation: { width: 100, height: 100 },
-                          type: 'base64'
+                          type: 'png'
                         })
                       ]
                     })

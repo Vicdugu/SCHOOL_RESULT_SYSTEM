@@ -19,10 +19,10 @@ const ImageCropModal: React.FC<ImageCropModalProps> = ({
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
 
   const handleCropComplete = useCallback(
-    (croppedArea: any, croppedAreaPixels: any) => {
+    (_croppedArea: any, croppedAreaPixels: { x: number; y: number; width: number; height: number }) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
     []
