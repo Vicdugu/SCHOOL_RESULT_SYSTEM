@@ -252,6 +252,21 @@ const SchoolHeader: React.FC = () => {
                   type="text"
                   value={tempName}
                   onChange={handleNameChange}
+                  onKeyDown={(e) => {
+                    // Enable Tab key to insert tab character instead of moving focus
+                    if (e.key === 'Tab') {
+                      e.preventDefault();
+                      const input = e.currentTarget;
+                      const start = input.selectionStart || 0;
+                      const end = input.selectionEnd || 0;
+                      const newValue = tempName.substring(0, start) + '\t' + tempName.substring(end);
+                      setTempName(newValue);
+                      // Move cursor after the tab
+                      setTimeout(() => {
+                        input.selectionStart = input.selectionEnd = start + 1;
+                      }, 0);
+                    }
+                  }}
                   className="school-name-input"
                   placeholder="Enter school name"
                   autoFocus
