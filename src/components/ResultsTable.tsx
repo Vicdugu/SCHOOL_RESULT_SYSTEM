@@ -131,13 +131,13 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
             <th className="score-col">Exam (60)</th>
             <th className="total-col">Total (100)</th>
             <th className="grade-col">Grade</th>
-            <th className="remark-col">Remark</th>
             <th className="rank-col sort-header" onClick={handlePositionSort} title="Click to sort by position">
               <span className="header-content">
                 Position
                 {sortBy === 'position' && <span className="sort-indicator"> ▼ High→Low</span>}
               </span>
             </th>
+            <th className="remark-col">Remark</th>
             <th className="action-col">Action</th>
           </tr>
         </thead>
@@ -211,13 +211,13 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                     {calculateGrade(subject_data.total)}
                   </span>
                 </td>
-                <td className="remark-col">
-                  <span className="remark-badge">{calculateRemark(subject_data.total)}</span>
-                </td>
                 <td className="rank-col">
                   <span className={`rank-badge ${subject_data.rank === 1 ? 'first' : subject_data.rank === 2 ? 'second' : subject_data.rank === 3 ? 'third' : ''}`}>
                     {subject_data.rank || '-'}
                   </span>
+                </td>
+                <td className="remark-col">
+                  <span className="remark-badge">{calculateRemark(subject_data.total)}</span>
                 </td>
                 <td className="action-col">
                   {expandedPupilId === pupil.id ? (

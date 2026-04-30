@@ -235,11 +235,11 @@ export const exportPupilResult = async (
           }),
           new TableCell({
             shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20 })] })]
           }),
           new TableCell({
             shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20 })] })]
           })
         ]
       })
@@ -279,11 +279,11 @@ export const exportPupilResult = async (
             }),
             new TableCell({ 
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: remark, size: 20 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: remark, size: 20 })] })] 
             })
           ]
         })
