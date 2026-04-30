@@ -236,78 +236,117 @@ export const exportPupilResult = async (
         height: { value: 240, rule: 'atLeast' },
         children: [
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Subject', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Subject', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA1 (20)', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA1 (20)', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA2 (20)', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA2 (20)', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Exam (60)', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Exam (60)', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Total', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Total', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Grade', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Grade', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20, color: 'FFFFFF' })] })]
           }),
           new TableCell({
-            shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20 })] })]
+            shading: { fill: '1F4E78' },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20, color: 'FFFFFF' })] })]
           })
         ]
       })
     ];
 
-    // Add subject rows with compact spacing
-    pupil.subjects.forEach(subject => {
+    // Add subject rows with alternating colors
+    pupil.subjects.forEach((subject, index) => {
       const grade = calculateGrade(subject.total);
       const remark = calculateRemark(subject.total);
+      
+      // Determine row background color (alternating)
+      const rowBgColor = index % 2 === 0 ? 'FFFFFF' : 'E7F0F7';
+      
+      // Determine grade background color
+      let gradeBgColor = 'FFFFFF';
+      let gradeTextColor = '000000';
+      switch(grade) {
+        case 'A':
+          gradeBgColor = '70AD47';
+          gradeTextColor = 'FFFFFF';
+          break;
+        case 'B':
+          gradeBgColor = '4472C4';
+          gradeTextColor = 'FFFFFF';
+          break;
+        case 'C':
+          gradeBgColor = 'FFC000';
+          gradeTextColor = '000000';
+          break;
+        case 'D':
+          gradeBgColor = 'FF9800';
+          gradeTextColor = 'FFFFFF';
+          break;
+        case 'E':
+        case 'F':
+          gradeBgColor = 'E74C3C';
+          gradeTextColor = 'FFFFFF';
+          break;
+      }
+      
       resultRows.push(
         new TableRow({
           height: { value: 400, rule: 'atLeast' },
           children: [
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.name, size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca1.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca2.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.exam.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.total.toString(), bold: true, size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: gradeBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: grade, bold: true, size: 20 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: grade, bold: true, size: 20, color: gradeTextColor })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              shading: { fill: rowBgColor },
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: remark, size: 20 })] })] 
             })
@@ -336,16 +375,16 @@ export const exportPupilResult = async (
       categories.forEach(([category]) => {
         headerCells.push(
           new TableCell({
-            shading: { fill: 'D3D3D3' },
+            shading: { fill: '70AD47' },
             margins: { top: 100, bottom: 100, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: category, bold: true, size: 18 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: category, bold: true, size: 18, color: 'FFFFFF' })] })]
           })
         );
         headerCells.push(
           new TableCell({
-            shading: { fill: 'D3D3D3' },
+            shading: { fill: '70AD47' },
             margins: { top: 100, bottom: 100, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 18 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 18, color: 'FFFFFF' })] })]
           })
         );
       });
@@ -357,6 +396,7 @@ export const exportPupilResult = async (
       // Add attribute rows
       for (let i = 0; i < maxAttributes; i++) {
         const rowCells: TableCell[] = [];
+        const rowBgColor = i % 2 === 0 ? 'FFFFFF' : 'E8F4E8';
         
         categories.forEach(([_, attributes]) => {
           const attribute = attributes[i];
@@ -365,6 +405,7 @@ export const exportPupilResult = async (
           // Attribute cell
           rowCells.push(
             new TableCell({
+              shading: { fill: rowBgColor },
               margins: { top: 80, bottom: 80, left: 80, right: 80 },
               children: [new Paragraph({ children: [new TextRun({ text: attribute || '', size: 16 })] })]
             })
@@ -373,6 +414,7 @@ export const exportPupilResult = async (
           // Rating cell (use number only)
           rowCells.push(
             new TableCell({
+              shading: { fill: rowBgColor },
               margins: { top: 80, bottom: 80, left: 80, right: 80 },
               children: [
                 new Paragraph({
@@ -398,23 +440,30 @@ export const exportPupilResult = async (
     }
 
     // ============ ATTENDANCE & SIGNATURE SECTION ============
+    children.push(new Paragraph({ children: [new TextRun({ text: 'Attendance & Signature Information', bold: true, size: 28, color: '1F4E78' })] }));
+    children.push(new Paragraph(''));
+    
     const attendanceRows: TableRow[] = [
       new TableRow({
         height: { value: 200, rule: 'atLeast' },
         children: [
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'No. of days school was opened:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: options.daysSchoolOpened?.toString() || '', size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'No. of days in attendance:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: options.daysInAttendance?.toString() || '', size: 18 })] })]
           })
@@ -424,18 +473,22 @@ export const exportPupilResult = async (
         height: { value: 200, rule: 'atLeast' },
         children: [
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'Next term begins on:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: options.nextTermBegins || '', size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph('')]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph('')]
           })
@@ -445,18 +498,22 @@ export const exportPupilResult = async (
         height: { value: 200, rule: 'atLeast' },
         children: [
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'Class Teacher:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: CLASS_TEACHERS[options.className] || options.classTeacher || '', size: 18 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: CLASS_TEACHERS[options.className] || options.classTeacher || '', size: 18, bold: true })] })]
           }),
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'Comment:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: pupil.classTeacherComment || '', size: 18 })] })]
           })
@@ -466,18 +523,22 @@ export const exportPupilResult = async (
         height: { value: 200, rule: 'atLeast' },
         children: [
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'Head Teacher:', bold: true, size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: pupil.headTeacherComment || '', size: 18 })] })]
           }),
           new TableCell({
+            shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph('')]
           }),
           new TableCell({
+            shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
             children: [new Paragraph('')]
           })
