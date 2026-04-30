@@ -223,6 +223,7 @@ export const exportPupilResult = async (
     // ============ RESULTS TABLE ============
     const resultRows = [
       new TableRow({
+        height: { value: 240, rule: 'atLeast' },
         children: [
           new TableCell({
             shading: { fill: 'D3D3D3' },
@@ -325,12 +326,14 @@ export const exportPupilResult = async (
       categories.forEach(([category]) => {
         headerCells.push(
           new TableCell({
+            shading: { fill: 'D3D3D3' },
             margins: { top: 100, bottom: 100, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: category, bold: true, size: 18 })] })]
           })
         );
         headerCells.push(
           new TableCell({
+            shading: { fill: 'D3D3D3' },
             margins: { top: 100, bottom: 100, left: 80, right: 80 },
             children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 18 })] })]
           })
