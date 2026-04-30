@@ -171,6 +171,7 @@ const LoginPage: React.FC = () => {
 
         <div className="login-footer">
           <p>Contact your administrator for access credentials.</p>
+          <p className="created-by">Created by Questbridge</p>
         </div>
       </div>
 

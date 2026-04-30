@@ -228,6 +228,14 @@
   margin: 4px 0;
 }
 
+.login-footer p.created-by {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #bbb;
+  font-style: italic;
+  font-weight: 500;
+}
+
 /* Forgot Password Link */
 .forgot-password-link {
   background: none;
