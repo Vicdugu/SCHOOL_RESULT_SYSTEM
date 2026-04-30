@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ResultsTable from './ResultsTable';
-import ObservationsTable from './ObservationsTable';
 import PupilProfile from './PupilProfile';
 import ExportOptionsModal from './ExportOptionsModal';
 import './ResultTabContent.css';
@@ -12,6 +11,11 @@ interface PupilResult {
   registrationNumber: string;
   subjects: SubjectResult[];
   observations: { [key: string]: number };
+  daysSchoolOpened?: number;
+  daysInAttendance?: number;
+  nextTermBegins?: string;
+  classTeacherComment?: string;
+  headTeacherComment?: string;
 }
 
 interface SubjectResult {
@@ -50,12 +54,16 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   const [toastMessage, setToastMessage] = useState<string>('');
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   
-  // New attendance and signature fields
-  const [daysSchoolOpened, setDaysSchoolOpened] = useState<number>(0);
-  const [daysInAttendance, setDaysInAttendance] = useState<number>(0);
-  const [nextTermBegins, setNextTermBegins] = useState<string>('');
-  const [classTeacherComment, setClassTeacherComment] = useState<string>('');
-  const [headTeacherComment, setHeadTeacherComment] = useState<string>('');
+  // Student selected for editing behavior and attendance
+  const [behaviorStudentId, setBehaviorStudentId] = useState<string | null>(null);
+  
+  // Temporary state for editing current student's behavior and attendance
+  const [currentStudentObservations, setCurrentStudentObservations] = useState<{ [key: string]: number }>({});
+  const [currentDaysSchoolOpened, setCurrentDaysSchoolOpened] = useState<number>(0);
+  const [currentDaysInAttendance, setCurrentDaysInAttendance] = useState<number>(0);
+  const [currentNextTermBegins, setCurrentNextTermBegins] = useState<string>('');
+  const [currentClassTeacherComment, setCurrentClassTeacherComment] = useState<string>('');
+  const [currentHeadTeacherComment, setCurrentHeadTeacherComment] = useState<string>('');
   
   // Use props or fallback to local state
   const activeSubject = propActiveSubject !== undefined ? propActiveSubject : 0;
@@ -254,21 +262,6 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     setPupils(finalPupils);
   };
 
-  const handleObservationChange = (pupilId: string, attribute: string, value: number) => {
-    const updatedPupils = pupils.map(pupil => {
-      if (pupil.id === pupilId) {
-        return {
-          ...pupil,
-          observations: {
-            ...pupil.observations,
-            [attribute]: value
-          }
-        };
-      }
-      return pupil;
-    });
-    setPupils(updatedPupils);
-  };
 
   const handlePupilNameChange = (pupilId: string, newName: string) => {
     const updatedPupils = pupils.map(pupil => {
@@ -429,6 +422,64 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     setTimeout(() => setSaveMessage(''), 2000);
   };
 
+  // Handle selecting a student for behavior and attendance editing
+  const handleSelectBehaviorStudent = (pupilId: string) => {
+    const student = pupils.find(p => p.id === pupilId);
+    if (student) {
+      setCurrentStudentObservations(student.observations || {});
+      setCurrentDaysSchoolOpened(student.daysSchoolOpened || 0);
+      setCurrentDaysInAttendance(student.daysInAttendance || 0);
+      setCurrentNextTermBegins(student.nextTermBegins || '');
+      setCurrentClassTeacherComment(student.classTeacherComment || '');
+      setCurrentHeadTeacherComment(student.headTeacherComment || '');
+      setBehaviorStudentId(pupilId);
+    }
+  };
+
+  // Handle updating observations for the behavior student
+  const handleBehaviorObservationChange = (attribute: string, value: number) => {
+    setCurrentStudentObservations(prev => ({
+      ...prev,
+      [attribute]: value
+    }));
+  };
+
+  // Handle saving behavior and attendance for the current student
+  const handleSaveBehaviorStudent = () => {
+    if (!behaviorStudentId) return;
+
+    const updatedPupils = pupils.map(pupil => {
+      if (pupil.id === behaviorStudentId) {
+        return {
+          ...pupil,
+          observations: currentStudentObservations,
+          daysSchoolOpened: currentDaysSchoolOpened,
+          daysInAttendance: currentDaysInAttendance,
+          nextTermBegins: currentNextTermBegins,
+          classTeacherComment: currentClassTeacherComment,
+          headTeacherComment: currentHeadTeacherComment
+        };
+      }
+      return pupil;
+    });
+
+    setPupils(updatedPupils);
+    
+    // Show save message
+    const studentName = pupils.find(p => p.id === behaviorStudentId)?.name || 'Student';
+    setToastMessage(`✓ ${studentName}'s behavior and attendance saved!`);
+    setTimeout(() => setToastMessage(''), 3000);
+
+    // Clear the behavior editor
+    setBehaviorStudentId(null);
+    setCurrentStudentObservations({});
+    setCurrentDaysSchoolOpened(0);
+    setCurrentDaysInAttendance(0);
+    setCurrentNextTermBegins('');
+    setCurrentClassTeacherComment('');
+    setCurrentHeadTeacherComment('');
+  };
+
   const selectedPupil = pupils.find(p => p.id === selectedPupilId);
 
   const handleExport = () => {
@@ -477,8 +528,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             rank: s.rank
           })),
           observations: pupil.observations,
-          classTeacherComment: classTeacherComment,
-          headTeacherComment: headTeacherComment
+          classTeacherComment: pupil.classTeacherComment,
+          headTeacherComment: pupil.headTeacherComment
         };
 
         const exportOptions = {
@@ -490,9 +541,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           academicYear: '2025/2026',
           totalStudentsInClass: pupilsToExport.length,
           classAverage: classAverage,
-          daysSchoolOpened: daysSchoolOpened,
-          daysInAttendance: daysInAttendance,
-          nextTermBegins: nextTermBegins,
+          daysSchoolOpened: pupil.daysSchoolOpened || 0,
+          daysInAttendance: pupil.daysInAttendance || 0,
+          nextTermBegins: pupil.nextTermBegins || '',
           classTeacher: schoolInfo.classTeacher || ''
         };
 
@@ -549,8 +600,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           rank: s.rank
         })),
         observations: studentToExport.observations,
-        classTeacherComment: classTeacherComment,
-        headTeacherComment: headTeacherComment
+        classTeacherComment: studentToExport.classTeacherComment,
+        headTeacherComment: studentToExport.headTeacherComment
       };
 
       const exportOptions = {
@@ -562,9 +613,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         academicYear: '2025/2026',
         totalStudentsInClass: pupilsWithNames.length,
         classAverage: classAverage,
-        daysSchoolOpened: daysSchoolOpened,
-        daysInAttendance: daysInAttendance,
-        nextTermBegins: nextTermBegins,
+        daysSchoolOpened: studentToExport.daysSchoolOpened || 0,
+        daysInAttendance: studentToExport.daysInAttendance || 0,
+        nextTermBegins: studentToExport.nextTermBegins || '',
         classTeacher: schoolInfo.classTeacher || ''
       };
 
@@ -646,68 +697,191 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
               ➕ Add Pupil Row
             </button>
           </div>
-          <ObservationsTable
-            pupils={pupils.map(p => ({
-              id: p.id,
-              name: p.name,
-              observations: p.observations || {}
-            }))}
-            onObservationChange={handleObservationChange}
-          />
-          
-          {/* Attendance and Signature Section */}
-          <div className="attendance-signature-section">
-            <h3>Attendance & Signature Information</h3>
-            <div className="attendance-grid">
-              <div className="attendance-field">
-                <label>Number of days school was opened:</label>
-                <input
-                  type="number"
-                  value={daysSchoolOpened}
-                  onChange={(e) => setDaysSchoolOpened(Number(e.target.value))}
-                  placeholder="e.g., 190"
-                  min="0"
-                />
-              </div>
-              <div className="attendance-field">
-                <label>Number of days in attendance:</label>
-                <input
-                  type="number"
-                  value={daysInAttendance}
-                  onChange={(e) => setDaysInAttendance(Number(e.target.value))}
-                  placeholder="e.g., 180"
-                  min="0"
-                />
-              </div>
+
+          {/* Student Selector and Per-Student Behavior Editor */}
+          <div className="behavior-editor-section">
+            <div className="student-selector-container">
+              <h3>Edit Student Behavior & Attendance</h3>
+              <select 
+                value={behaviorStudentId || ''}
+                onChange={(e) => handleSelectBehaviorStudent(e.target.value)}
+                className="student-selector"
+              >
+                <option value="">-- Select a student to edit --</option>
+                {pupils.map(pupil => (
+                  <option key={pupil.id} value={pupil.id}>
+                    {pupil.name || '(No name)'}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="attendance-field">
-              <label>Next term begins on:</label>
-              <input
-                type="date"
-                value={nextTermBegins}
-                onChange={(e) => setNextTermBegins(e.target.value)}
-              />
-            </div>
-            <div className="signature-grid">
-              <div className="signature-field">
-                <label>Class Teacher Comment:</label>
-                <textarea
-                  value={classTeacherComment}
-                  onChange={(e) => setClassTeacherComment(e.target.value)}
-                  placeholder="Enter class teacher comment"
-                  rows={2}
-                />
+
+            {behaviorStudentId ? (
+              <div className="student-behavior-form">
+                <div className="selected-student-info">
+                  <h4>Editing: {pupils.find(p => p.id === behaviorStudentId)?.name}</h4>
+                </div>
+
+                {/* Observations for current student */}
+                <div className="observations-section">
+                  <h4>Affective & Psychomotor Observations (Behavioral & Physical Abilities)</h4>
+                  <div className="observations-form">
+                    <div className="attribute-category">
+                      <h5>Classroom Attributes</h5>
+                      {['Punctuality', 'Attendance', 'Participation', 'Attitude to work', 'Attentiveness', 'Assignments', 'Handwriting'].map(attr => (
+                        <div key={attr} className="attribute-row">
+                          <label>{attr}:</label>
+                          <select 
+                            value={currentStudentObservations[attr] || 0}
+                            onChange={(e) => handleBehaviorObservationChange(attr, Number(e.target.value))}
+                            className="rating-select"
+                          >
+                            <option value={0}>-</option>
+                            <option value={5}>5 - Excellent</option>
+                            <option value={4}>4 - Very good</option>
+                            <option value={3}>3 - Good</option>
+                            <option value={2}>2 - Weak</option>
+                            <option value={1}>1 - Can do better</option>
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="attribute-category">
+                      <h5>Psychological Attributes</h5>
+                      {['Emotional stability', 'Initiative/Creativity', 'Self-Control', 'Sense of Responsibility', 'Relationship with Students', 'Relationship with Staff', 'Leadership Trait'].map(attr => (
+                        <div key={attr} className="attribute-row">
+                          <label>{attr}:</label>
+                          <select 
+                            value={currentStudentObservations[attr] || 0}
+                            onChange={(e) => handleBehaviorObservationChange(attr, Number(e.target.value))}
+                            className="rating-select"
+                          >
+                            <option value={0}>-</option>
+                            <option value={5}>5 - Excellent</option>
+                            <option value={4}>4 - Very good</option>
+                            <option value={3}>3 - Good</option>
+                            <option value={2}>2 - Weak</option>
+                            <option value={1}>1 - Can do better</option>
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="attribute-category">
+                      <h5>Social Attributes</h5>
+                      {['Neatness', 'Politeness', 'Honesty', 'Verbal Fluency'].map(attr => (
+                        <div key={attr} className="attribute-row">
+                          <label>{attr}:</label>
+                          <select 
+                            value={currentStudentObservations[attr] || 0}
+                            onChange={(e) => handleBehaviorObservationChange(attr, Number(e.target.value))}
+                            className="rating-select"
+                          >
+                            <option value={0}>-</option>
+                            <option value={5}>5 - Excellent</option>
+                            <option value={4}>4 - Very good</option>
+                            <option value={3}>3 - Good</option>
+                            <option value={2}>2 - Weak</option>
+                            <option value={1}>1 - Can do better</option>
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="attribute-category">
+                      <h5>Physical Attributes</h5>
+                      {['Physical Health', 'Games & Sports', 'Dexterity'].map(attr => (
+                        <div key={attr} className="attribute-row">
+                          <label>{attr}:</label>
+                          <select 
+                            value={currentStudentObservations[attr] || 0}
+                            onChange={(e) => handleBehaviorObservationChange(attr, Number(e.target.value))}
+                            className="rating-select"
+                          >
+                            <option value={0}>-</option>
+                            <option value={5}>5 - Excellent</option>
+                            <option value={4}>4 - Very good</option>
+                            <option value={3}>3 - Good</option>
+                            <option value={2}>2 - Weak</option>
+                            <option value={1}>1 - Can do better</option>
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Attendance and Signature Section for current student */}
+                <div className="attendance-signature-section">
+                  <h4>Attendance & Signature Information</h4>
+                  <div className="attendance-grid">
+                    <div className="attendance-field">
+                      <label>Number of days school was opened:</label>
+                      <input
+                        type="number"
+                        value={currentDaysSchoolOpened}
+                        onChange={(e) => setCurrentDaysSchoolOpened(Number(e.target.value))}
+                        placeholder="e.g., 190"
+                        min="0"
+                      />
+                    </div>
+                    <div className="attendance-field">
+                      <label>Number of days in attendance:</label>
+                      <input
+                        type="number"
+                        value={currentDaysInAttendance}
+                        onChange={(e) => setCurrentDaysInAttendance(Number(e.target.value))}
+                        placeholder="e.g., 180"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                  <div className="attendance-field">
+                    <label>Next term begins on:</label>
+                    <input
+                      type="date"
+                      value={currentNextTermBegins}
+                      onChange={(e) => setCurrentNextTermBegins(e.target.value)}
+                    />
+                  </div>
+                  <div className="signature-grid">
+                    <div className="signature-field">
+                      <label>Class Teacher Comment:</label>
+                      <textarea
+                        value={currentClassTeacherComment}
+                        onChange={(e) => setCurrentClassTeacherComment(e.target.value)}
+                        placeholder="Enter class teacher comment"
+                        rows={3}
+                      />
+                    </div>
+                    <div className="signature-field">
+                      <label>Head Teacher Comment:</label>
+                      <textarea
+                        value={currentHeadTeacherComment}
+                        onChange={(e) => setCurrentHeadTeacherComment(e.target.value)}
+                        placeholder="Enter head teacher comment"
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Save Button */}
+                <div className="behavior-save-section">
+                  <button onClick={handleSaveBehaviorStudent} className="save-behavior-btn">
+                    💾 Save Student Data
+                  </button>
+                  <button onClick={() => setBehaviorStudentId(null)} className="cancel-behavior-btn">
+                    ✕ Cancel
+                  </button>
+                </div>
               </div>
-              <div className="signature-field">
-                <label>Head Teacher Comment:</label>
-                <textarea
-                  value={headTeacherComment}
-                  onChange={(e) => setHeadTeacherComment(e.target.value)}
-                  placeholder="Enter head teacher comment"
-                  rows={2}
-                />
+            ) : (
+              <div className="all-students-observations">
+                <p className="info-text">Select a student above to edit their behavior and attendance information</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}

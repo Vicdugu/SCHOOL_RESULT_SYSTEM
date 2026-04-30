@@ -500,3 +500,258 @@
   border-color: #ffc107;
   color: #ffc107;
 }
+
+/* Behavior Editor Section */
+.behavior-editor-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.student-selector-container {
+  margin-bottom: 20px;
+}
+
+.student-selector-container h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.student-selector {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+}
+
+.student-selector:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.student-behavior-form {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.selected-student-info {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  border-radius: 4px;
+}
+
+.selected-student-info h4 {
+  margin: 0;
+  color: #1976d2;
+  font-size: 16px;
+}
+
+.observations-section {
+  margin-bottom: 20px;
+}
+
+.observations-section h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 2px solid #70ad47;
+  padding-bottom: 8px;
+}
+
+.observations-form {
+  display: grid;
+  gap: 20px;
+}
+
+.attribute-category {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.attribute-category h5 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attribute-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.attribute-row:last-child {
+  margin-bottom: 0;
+}
+
+.attribute-row label {
+  flex: 1;
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+}
+
+.rating-select {
+  flex: 0.8;
+  padding: 8px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+}
+
+.rating-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.all-students-observations {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+}
+
+.info-text {
+  margin: 0;
+  font-size: 14px;
+}
+
+.behavior-save-section {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.save-behavior-btn {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-behavior-btn:hover {
+  background-color: #229954;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.cancel-behavior-btn {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-behavior-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Dark mode for behavior editor */
+.dark-mode .behavior-editor-section {
+  background: #242424;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .student-selector-container h3 {
+  color: #e8e8e8;
+}
+
+.dark-mode .student-selector {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e8e8e8;
+}
+
+.dark-mode .student-selector:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.dark-mode .student-behavior-form {
+  border-color: #3a3a3a;
+  background-color: #1a1a1a;
+}
+
+.dark-mode .selected-student-info {
+  background-color: #1a3a5a;
+  border-left-color: #4a9eff;
+}
+
+.dark-mode .selected-student-info h4 {
+  color: #6ab5ff;
+}
+
+.dark-mode .observations-section h4 {
+  color: #e8e8e8;
+  border-bottom-color: #70ad47;
+}
+
+.dark-mode .attribute-category {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.dark-mode .attribute-category h5 {
+  color: #a8a8a8;
+}
+
+.dark-mode .attribute-row label {
+  color: #b8b8b8;
+}
+
+.dark-mode .rating-select {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e8e8e8;
+}
+
+.dark-mode .rating-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.dark-mode .all-students-observations {
+  color: #555;
+}
+
+.dark-mode .behavior-save-section {
+  border-top-color: #3a3a3a;
+}
