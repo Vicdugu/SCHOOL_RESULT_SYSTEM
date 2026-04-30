@@ -361,24 +361,63 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     setPupils(updatedPupils);
   };
 
+  // Helper function to get all registration numbers from all classes
+  const getAllRegistrationNumbers = (): string[] => {
+    const allRegNumbers: string[] = [];
+    
+    // Check all classes (1-6)
+    for (let classId = 1; classId <= 6; classId++) {
+      const stored = localStorage.getItem(`class-${classId}-results`);
+      if (stored) {
+        try {
+          const classPupils: PupilResult[] = JSON.parse(stored);
+          classPupils.forEach(pupil => {
+            if (pupil.registrationNumber) {
+              allRegNumbers.push(pupil.registrationNumber);
+            }
+          });
+        } catch (e) {
+          console.error(`Error parsing class-${classId}-results`, e);
+        }
+      }
+    }
+    
+    return allRegNumbers;
+  };
+
+  // Helper function to get the next available registration number
+  const getNextRegistrationNumber = (): string => {
+    const allRegNumbers = getAllRegistrationNumbers();
+    
+    // Extract all numeric parts and find the maximum
+    let maxNum = 0;
+    allRegNumbers.forEach(regNum => {
+      const numericMatch = regNum.match(/(\d+)$/);
+      if (numericMatch) {
+        const num = parseInt(numericMatch[1], 10);
+        if (num > maxNum) {
+          maxNum = num;
+        }
+      }
+    });
+    
+    const nextNum = maxNum + 1;
+    const nextNumStr = String(nextNum).padStart(3, '0');
+    return `S25/UBF/0${nextNumStr}`;
+  };
+
   const handleUpdateProfile = (pupilId: string, field: 'name' | 'sex' | 'registrationNumber', value: string) => {
-    // Check for duplicate registration number
+    // Check for duplicate registration number across ALL classes
     if (field === 'registrationNumber' && value) {
-      const isDuplicate = pupils.some(p => p.id !== pupilId && p.registrationNumber === value);
+      const allRegNumbers = getAllRegistrationNumbers();
+      const isDuplicate = allRegNumbers.includes(value);
       
       if (isDuplicate) {
-        // Extract the numeric part to suggest next number
-        const numericMatch = value.match(/(\d+)$/);
-        if (numericMatch) {
-          const currentNum = parseInt(numericMatch[1], 10);
-          const nextNum = currentNum + 1;
-          const nextNumStr = String(nextNum).padStart(3, '0');
-          const suggestedRegNo = 'S25/UBF/0' + nextNumStr;
-          
-          setToastMessage(`⚠️ Reg. No. ${value} already assigned! Try: ${suggestedRegNo}`);
-          setTimeout(() => setToastMessage(''), 3500);
-          return; // Don't update if duplicate
-        }
+        // Get the next available registration number across all students
+        const suggestedRegNo = getNextRegistrationNumber();
+        setToastMessage(`⚠️ Reg. No. ${value} already assigned! Try: ${suggestedRegNo}`);
+        setTimeout(() => setToastMessage(''), 3500);
+        return; // Don't update if duplicate
       }
     }
 
@@ -389,28 +428,22 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
       return pupil;
     });
 
-    // Auto-increment registration number for the next empty student
+    // Auto-increment registration number for the next empty student in this class
     if (field === 'registrationNumber' && value) {
       const currentPupilIndex = updatedPupils.findIndex(p => p.id === pupilId);
       
-      // Extract the numeric part from registration number
-      const numericMatch = value.match(/(\d+)$/);
-      if (numericMatch) {
-        const currentNum = parseInt(numericMatch[1], 10);
-        const nextNum = currentNum + 1;
-        const nextNumStr = String(nextNum).padStart(3, '0'); // Pad to 3 digits
-        
-        // Find the next pupil with empty registration number
-        const nextEmptyIndex = updatedPupils.findIndex((p, idx) => 
-          idx > currentPupilIndex && !p.registrationNumber
-        );
-        
-        if (nextEmptyIndex !== -1) {
-          updatedPupils[nextEmptyIndex] = {
-            ...updatedPupils[nextEmptyIndex],
-            registrationNumber: 'S25/UBF/0' + nextNumStr
-          };
-        }
+      // Find the next pupil with empty registration number
+      const nextEmptyIndex = updatedPupils.findIndex((p, idx) => 
+        idx > currentPupilIndex && !p.registrationNumber
+      );
+      
+      if (nextEmptyIndex !== -1) {
+        // Use the global next available number
+        const nextRegNumber = getNextRegistrationNumber();
+        updatedPupils[nextEmptyIndex] = {
+          ...updatedPupils[nextEmptyIndex],
+          registrationNumber: nextRegNumber
+        };
       }
     }
 
