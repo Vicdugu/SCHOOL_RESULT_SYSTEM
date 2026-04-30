@@ -125,7 +125,7 @@ export const exportPupilResult = async (
           children: [
             // Left cell: School name and address
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
+              width: { size: 70, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [
@@ -142,7 +142,7 @@ export const exportPupilResult = async (
             }),
             // Right cell: Logo
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
+              width: { size: 30, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: options.schoolLogo
@@ -179,7 +179,7 @@ export const exportPupilResult = async (
           children: [
             // Left column: Student info
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
+              width: { size: 70, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [
@@ -199,7 +199,7 @@ export const exportPupilResult = async (
             }),
             // Right column: Class info
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
+              width: { size: 30, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [
