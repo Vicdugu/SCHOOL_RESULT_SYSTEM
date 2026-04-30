@@ -31,81 +31,63 @@ const ObservationsTable: React.FC<ObservationsTableProps> = ({ pupils = [], onOb
     return <div>Error: Attributes not loaded</div>;
   }
 
-  // Get max number of attributes in any category for consistent table sizing
-  const attributeValues = Object.values(ATTRIBUTES);
-  const maxAttributesInCategory = attributeValues.length > 0 ? Math.max(...attributeValues.map(attrs => attrs.length)) : 0;
+  // Filter pupils with names
+  const pupilsWithNames = pupils.filter(p => p.name.trim() !== '');
 
-  if (maxAttributesInCategory === 0) {
-    return <div>Error: No attributes found</div>;
+  if (pupilsWithNames.length === 0) {
+    return null; // Don't show table if no pupils have names
   }
 
   return (
     <div className="observations-container">
       <h3 className="observations-title">Affective & Psychomotor Observations (Behavioral & Physical Abilities)</h3>
       
-      <div className="observations-wrapper">
-        <table className="observations-table">
-          <thead>
-            <tr>
-              <th className="pupil-name-col">Pupil Name</th>
-              {Object.entries(ATTRIBUTES).map(([category]) => (
-                <th key={category} colSpan={maxAttributesInCategory} className="category-header">
-                  {category}
-                </th>
-              ))}
-            </tr>
-            <tr>
-              <th className="pupil-name-col"></th>
-              {Object.entries(ATTRIBUTES).map(([category, attributes]) => (
-                <React.Fragment key={category}>
-                  {Array.from({ length: maxAttributesInCategory }).map((_, idx) => (
-                    <th key={`${category}-${idx}`} className="attribute-col">
-                      {attributes[idx] || ''}
+      {Object.entries(ATTRIBUTES).map(([category, attributes]) => (
+        <div key={category} className="category-section">
+          <h4 className="category-name">{category}</h4>
+          <div className="observations-wrapper">
+            <table className="observations-table">
+              <thead>
+                <tr>
+                  <th className="attribute-name-col">Attribute</th>
+                  {pupilsWithNames.map(pupil => (
+                    <th key={pupil.id} className="pupil-col">
+                      {pupil.name}
                     </th>
                   ))}
-                </React.Fragment>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {pupils.filter(p => p.name.trim() !== '').map(pupil => (
-              <tr key={pupil.id}>
-                <td className="pupil-name-col">
-                  <span className="pupil-name">{pupil.name}</span>
-                </td>
-                {Object.entries(ATTRIBUTES).map(([category, attributes]) => (
-                  <React.Fragment key={category}>
-                    {Array.from({ length: maxAttributesInCategory }).map((_, idx) => {
-                      const attribute = attributes[idx];
-                      const value = attribute ? (pupil.observations[attribute] || 0) : 0;
-                      
+                </tr>
+              </thead>
+              <tbody>
+                {attributes.map(attribute => (
+                  <tr key={attribute}>
+                    <td className="attribute-name-col">{attribute}</td>
+                    {pupilsWithNames.map(pupil => {
+                      const value = pupil.observations?.[attribute] || 0;
                       return (
                         <td key={`${pupil.id}-${attribute}`} className="rating-cell">
-                          {attribute && (
-                            <select
-                              value={value}
-                              onChange={(e) => onObservationChange(pupil.id, attribute, Number(e.target.value))}
-                              className="rating-select"
-                              title={`${attribute}: Select rating`}
-                            >
-                              <option value={0}>-</option>
-                              <option value={5}>5</option>
-                              <option value={4}>4</option>
-                              <option value={3}>3</option>
-                              <option value={2}>2</option>
-                              <option value={1}>1</option>
-                            </select>
-                          )}
+                          <select
+                            value={value}
+                            onChange={(e) => onObservationChange(pupil.id, attribute, Number(e.target.value))}
+                            className="rating-select"
+                            title={`${attribute}: Select rating`}
+                          >
+                            <option value={0}>-</option>
+                            <option value={5}>5</option>
+                            <option value={4}>4</option>
+                            <option value={3}>3</option>
+                            <option value={2}>2</option>
+                            <option value={1}>1</option>
+                          </select>
                         </td>
                       );
                     })}
-                  </React.Fragment>
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
 
       <div className="rating-legend">
         <h4>Rating Scale:</h4>
