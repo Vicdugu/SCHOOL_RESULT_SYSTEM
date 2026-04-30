@@ -418,6 +418,39 @@
   background-color: #1a2a4a;
 }
 
+/* Loading state styling */
+.loading-row {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.loading-message {
+  padding: 20px !important;
+  text-align: center;
+  color: #667eea;
+  font-weight: 600;
+  font-size: 14px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dark-mode .loading-row {
+  background-color: #2a2a2a;
+  border-bottom-color: #3a3a3a;
+}
+
+.dark-mode .loading-message {
+  color: #8aa8ff;
+}
+
 .dark-mode .total-value {
   color: #667eea;
 }

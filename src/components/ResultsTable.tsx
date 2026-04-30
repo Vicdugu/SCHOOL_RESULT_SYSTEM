@@ -144,6 +144,18 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
         <tbody>
           {sortedPupils.map((pupil, index) => {
             const subject_data = pupil.subjects[subjectIndex];
+            
+            // Safety check: if subject data doesn't exist, show loading/syncing message
+            if (!subject_data) {
+              return (
+                <tr key={pupil.id} className="loading-row">
+                  <td colSpan={8} className="loading-message">
+                    ⏳ Syncing subject data... Please wait.
+                  </td>
+                </tr>
+              );
+            }
+
             return (
               <tr key={pupil.id} className={subject_data.rank === 1 ? 'top-score' : ''}>
                 <td className="action-col">

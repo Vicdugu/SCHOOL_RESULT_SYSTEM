@@ -216,10 +216,41 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     });
   }, [subjects]);
 
+  // Listen for external changes to subjects in localStorage (e.g., from admin panel)
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const savedSubjects = localStorage.getItem(`class-${classId}-subjects`);
+      if (savedSubjects) {
+        const newSubjects = JSON.parse(savedSubjects);
+        
+        // Only update if subjects actually changed
+        if (JSON.stringify(newSubjects) !== JSON.stringify(subjects)) {
+          setSubjects(newSubjects);
+        }
+      }
+    };
+
+    // Check for updates every 500ms (when admin applies subjects)
+    const interval = setInterval(handleStorageChange, 500);
+    
+    // Also listen for storage events (cross-tab updates)
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [classId, subjects]);
+
   // Calculate totals and rankings for the current subject
   const currentSubject = activeSubject >= 0 ? subjects[activeSubject] : '';
   const isManagingSubjects = userRole === 'admin' && activeSubject === MANAGE_SUBJECTS_INDEX;
   const calculateRankings = (subjectIndex: number, pupilist: PupilResult[] = pupils) => {
+    // Safety check: ensure subjectIndex is valid
+    if (subjectIndex < 0 || !pupilist[0] || subjectIndex >= pupilist[0].subjects.length) {
+      return pupilist;
+    }
+
     const updatedPupils = pupilist.map(pupil => {
       return {
         ...pupil,
@@ -238,7 +269,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     // Calculate rankings based on totals
     const scores = updatedPupils.map(p => ({
       id: p.id,
-      total: p.subjects[subjectIndex].total
+      total: p.subjects[subjectIndex]?.total ?? 0
     }));
     scores.sort((a, b) => b.total - a.total);
 
@@ -260,6 +291,11 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     field: 'ca1' | 'ca2' | 'exam',
     value: number
   ) => {
+    // Safety check: ensure subjectIndex is valid
+    if (subjectIndex < 0 || !pupils[0] || subjectIndex >= pupils[0].subjects.length) {
+      return;
+    }
+
     const updatedPupils = pupils.map(pupil => {
       if (pupil.id === pupilId) {
         return {
