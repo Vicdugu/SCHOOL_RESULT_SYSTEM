@@ -267,7 +267,7 @@ export const exportPupilResult = async (
       const remark = calculateRemark(subject.total);
       resultRows.push(
         new TableRow({
-          height: { value: 200, rule: 'atLeast' },
+          height: { value: 400, rule: 'atLeast' },
           children: [
             new TableCell({ 
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
@@ -378,6 +378,35 @@ export const exportPupilResult = async (
       }
 
       children.push(new Table({ rows: observationRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+      
+      // Add bold line under behavior table
+      children.push(
+        new Table({
+          rows: [
+            new TableRow({
+              children: [
+                new TableCell({
+                  borders: {
+                    bottom: {
+                      color: '000000',
+                      space: 1,
+                      style: BorderStyle.SINGLE,
+                      size: 48  // 6pt bold line
+                    },
+                    top: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE }
+                  },
+                  margins: { top: 0, bottom: 0, left: 0, right: 0 },
+                  children: [new Paragraph({ text: '' })]
+                })
+              ]
+            })
+          ],
+          width: { size: 100, type: WidthType.PERCENTAGE }
+        })
+      );
+      
       children.push(new Paragraph(''));
 
       // Add legend
