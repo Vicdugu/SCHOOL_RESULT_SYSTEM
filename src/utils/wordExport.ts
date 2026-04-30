@@ -77,6 +77,16 @@ const ATTRIBUTES = {
   Physical: ['Physical Health', 'Games & Sports', 'Dexterity']
 };
 
+// Mapping of class names to dedicated teachers
+const CLASS_TEACHERS: { [key: string]: string } = {
+  'Class 1': 'Teacher 1',
+  'Class 2': 'Teacher 2',
+  'Class 3': 'Teacher 3',
+  'Class 4': 'Teacher 4',
+  'Class 5': 'Teacher 5',
+  'Class 6': 'Teacher 6'
+};
+
 export const exportPupilResult = async (
   pupil: PupilData,
   options: ExportOptions
@@ -378,35 +388,6 @@ export const exportPupilResult = async (
       }
 
       children.push(new Table({ rows: observationRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
-      
-      // Add bold line under behavior table
-      children.push(
-        new Table({
-          rows: [
-            new TableRow({
-              children: [
-                new TableCell({
-                  borders: {
-                    bottom: {
-                      color: '000000',
-                      space: 1,
-                      style: BorderStyle.SINGLE,
-                      size: 48  // 6pt bold line
-                    },
-                    top: { style: BorderStyle.NONE },
-                    left: { style: BorderStyle.NONE },
-                    right: { style: BorderStyle.NONE }
-                  },
-                  margins: { top: 0, bottom: 0, left: 0, right: 0 },
-                  children: [new Paragraph({ text: '' })]
-                })
-              ]
-            })
-          ],
-          width: { size: 100, type: WidthType.PERCENTAGE }
-        })
-      );
-      
       children.push(new Paragraph(''));
 
       // Add legend
@@ -469,7 +450,7 @@ export const exportPupilResult = async (
           }),
           new TableCell({
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: options.classTeacher || '', size: 18 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: CLASS_TEACHERS[options.className] || options.classTeacher || '', size: 18 })] })]
           }),
           new TableCell({
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
