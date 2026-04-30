@@ -5,6 +5,7 @@ import './SchoolHeader.css';
 
 interface SchoolInfo {
   name: string;
+  address: string; // School address
   logo: string | null; // Base64 encoded image
   backgroundImage: string | null; // Base64 encoded background image
 }
@@ -16,11 +17,13 @@ const SchoolHeader: React.FC = () => {
   
   const [schoolInfo, setSchoolInfo] = useState<SchoolInfo>(() => {
     const stored = localStorage.getItem('school-info');
-    return stored ? JSON.parse(stored) : { name: 'Your School Name', logo: null, backgroundImage: null };
+    return stored ? JSON.parse(stored) : { name: 'Your School Name', address: 'School Address', logo: null, backgroundImage: null };
   });
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(schoolInfo.name);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [tempAddress, setTempAddress] = useState(schoolInfo.address);
   const [uploadMessage, setUploadMessage] = useState('');
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [imageToBeProcessed, setImageToBeProcessed] = useState<string | null>(null);
@@ -36,6 +39,10 @@ const SchoolHeader: React.FC = () => {
     setTempName(e.target.value);
   };
 
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempAddress(e.target.value);
+  };
+
   const handleSaveName = () => {
     if (!isMasterAdmin) return; // Only master admin can save
     if (tempName.trim()) {
@@ -44,10 +51,24 @@ const SchoolHeader: React.FC = () => {
     }
   };
 
+  const handleSaveAddress = () => {
+    if (!isMasterAdmin) return; // Only master admin can save
+    if (tempAddress.trim()) {
+      setSchoolInfo({ ...schoolInfo, address: tempAddress.trim() });
+      setIsEditingAddress(false);
+    }
+  };
+
   const handleEditClick = () => {
     if (!isMasterAdmin) return; // Only master admin can edit
     setIsEditingName(true);
     setTempName(schoolInfo.name);
+  };
+
+  const handleEditAddressClick = () => {
+    if (!isMasterAdmin) return; // Only master admin can edit
+    setIsEditingAddress(true);
+    setTempAddress(schoolInfo.address);
   };
 
   const handleLogoClick = () => {
@@ -296,6 +317,46 @@ const SchoolHeader: React.FC = () => {
                     title="Edit school name"
                   >
                     ✏️ Edit
+                  </button>
+                )}
+              </div>
+            )}
+            {/* School Address Section */}
+            {isEditingAddress ? (
+              <div className="address-edit-container">
+                <input
+                  type="text"
+                  value={tempAddress}
+                  onChange={handleAddressChange}
+                  className="school-address-input"
+                  placeholder="Enter school address"
+                  autoFocus
+                />
+                <button
+                  onClick={handleSaveAddress}
+                  className="save-btn-small"
+                  title="Save address"
+                >
+                  ✓ Save
+                </button>
+                <button
+                  onClick={() => setIsEditingAddress(false)}
+                  className="cancel-btn-small"
+                  title="Cancel editing"
+                >
+                  ✕ Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="address-display-container">
+                <p className="school-address">{schoolInfo.address}</p>
+                {isMasterAdmin && (
+                  <button
+                    onClick={handleEditAddressClick}
+                    className="edit-address-btn"
+                    title="Edit school address"
+                  >
+                    ✏️
                   </button>
                 )}
               </div>

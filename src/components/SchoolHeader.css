@@ -314,6 +314,106 @@
   transform: translateY(0);
 }
 
+/* School Address Section */
+.address-display-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.school-address {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.edit-address-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-address-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.address-edit-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.school-address-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 2px solid white;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.school-address-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.school-address-input::placeholder {
+  color: #bdc3c7;
+}
+
+.save-btn-small,
+.cancel-btn-small {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.save-btn-small {
+  background: #27ae60;
+  color: white;
+}
+
+.save-btn-small:hover {
+  background: #229954;
+  transform: translateY(-1px);
+}
+
+.cancel-btn-small {
+  background: #e74c3c;
+  color: white;
+}
+
+.cancel-btn-small:hover {
+  background: #c0392b;
+  transform: translateY(-1px);
+}
+
 /* Dark Mode */
 .dark-mode .school-header {
   background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
@@ -363,6 +463,34 @@
 .dark-mode .school-name-input:focus {
   border-color: #764ba2;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.dark-mode .school-address {
+  color: rgba(236, 240, 241, 0.95);
+}
+
+.dark-mode .school-address-input {
+  background: rgba(44, 62, 80, 0.9);
+  color: #ecf0f1;
+  border-color: #667eea;
+}
+
+.dark-mode .school-address-input::placeholder {
+  color: #95a5a6;
+}
+
+.dark-mode .school-address-input:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.dark-mode .edit-address-btn {
+  background: rgba(102, 126, 234, 0.2);
+  color: #ecf0f1;
+}
+
+.dark-mode .edit-address-btn:hover {
+  background: rgba(102, 126, 234, 0.3);
 }
 
 /* Animations */
