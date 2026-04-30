@@ -16,6 +16,7 @@ interface SubjectResult {
   exam: number;
   total: number;
   rank: number;
+  remark?: string;
 }
 
 interface ResultsTableProps {
@@ -87,6 +88,26 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
     return 'F';
   };
 
+  const calculateRemark = (total: number): string => {
+    const grade = calculateGrade(total);
+    switch (grade) {
+      case 'A':
+        return 'Exceptional';
+      case 'B':
+        return 'Very good';
+      case 'C':
+        return 'Good';
+      case 'D':
+        return 'Satisfactory';
+      case 'E':
+        return 'Needs improvement';
+      case 'F':
+        return 'Unsatisfactory';
+      default:
+        return '-';
+    }
+  };
+
   const sortedPupils = getSortedPupils();
 
   return (
@@ -110,6 +131,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
             <th className="score-col">Exam (60)</th>
             <th className="total-col">Total (100)</th>
             <th className="grade-col">Grade</th>
+            <th className="remark-col">Remark</th>
             <th className="rank-col sort-header" onClick={handlePositionSort} title="Click to sort by position">
               <span className="header-content">
                 Position
@@ -188,6 +210,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                   <span className={`grade-badge grade-${calculateGrade(subject_data.total).toLowerCase()}`}>
                     {calculateGrade(subject_data.total)}
                   </span>
+                </td>
+                <td className="remark-col">
+                  <span className="remark-badge">{calculateRemark(subject_data.total)}</span>
                 </td>
                 <td className="rank-col">
                   <span className={`rank-badge ${subject_data.rank === 1 ? 'first' : subject_data.rank === 2 ? 'second' : subject_data.rank === 3 ? 'third' : ''}`}>

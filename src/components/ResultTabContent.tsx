@@ -19,6 +19,7 @@ interface SubjectResult {
   exam: number;
   total: number;
   rank: number;
+  remark?: string;
 }
 
 interface ResultTabContentProps {

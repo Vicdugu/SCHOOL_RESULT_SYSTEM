@@ -41,6 +41,26 @@ const calculateGrade = (total: number): string => {
   return 'F';
 };
 
+const calculateRemark = (total: number): string => {
+  const grade = calculateGrade(total);
+  switch (grade) {
+    case 'A':
+      return 'Exceptional';
+    case 'B':
+      return 'Very good';
+    case 'C':
+      return 'Good';
+    case 'D':
+      return 'Satisfactory';
+    case 'E':
+      return 'Needs improvement';
+    case 'F':
+      return 'Unsatisfactory';
+    default:
+      return '-';
+  }
+};
+
 export const exportPupilResult = async (
   pupil: PupilData,
   options: ExportOptions
@@ -215,45 +235,55 @@ export const exportPupilResult = async (
           }),
           new TableCell({
             shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Position', bold: true, size: 20 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20 })] })]
           }),
           new TableCell({
             shading: { fill: 'D3D3D3' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20 })] })]
           })
         ]
       })
     ];
 
-    // Add subject rows
+    // Add subject rows with increased spacing
     pupil.subjects.forEach(subject => {
       const grade = calculateGrade(subject.total);
+      const remark = calculateRemark(subject.total);
       resultRows.push(
         new TableRow({
+          height: { value: 400, rule: 'atLeast' },
           children: [
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.name, size: 20 })] })] 
             }),
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca1.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca2.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.exam.toString(), size: 20 })] })] 
             }),
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.total.toString(), bold: true, size: 20 })] })] 
             }),
             new TableCell({ 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
               children: [new Paragraph({ children: [new TextRun({ text: grade, bold: true, size: 20 })] })] 
             }),
             new TableCell({ 
-              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              children: [new Paragraph({ children: [new TextRun({ text: remark, size: 20 })] })] 
             }),
             new TableCell({ 
-              children: [new Paragraph({ children: [new TextRun({ text: subject.remark || '-', size: 20 })] })] 
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
             })
           ]
         })
