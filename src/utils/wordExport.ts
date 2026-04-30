@@ -18,6 +18,11 @@ interface PupilData {
   sex?: string;
   subjects: SubjectResult[];
   observations?: { [key: string]: number };
+  daysSchoolOpened?: number;
+  daysInAttendance?: number;
+  nextTermBegins?: string;
+  classTeacherComment?: string;
+  headTeacherComment?: string;
 }
 
 interface ExportOptions {
@@ -31,6 +36,9 @@ interface ExportOptions {
   headOfSchool?: string;
   totalStudentsInClass?: number;
   classAverage?: number;
+  daysSchoolOpened?: number;
+  daysInAttendance?: number;
+  nextTermBegins?: string;
 }
 
 const calculateGrade = (total: number): string => {
@@ -150,8 +158,7 @@ export const exportPupilResult = async (
 
     children.push(headerTable);
     
-    // Two lines of vertical spacing
-    children.push(new Paragraph(''));
+    // One line of vertical spacing
     children.push(new Paragraph(''));
 
     // ============ STUDENT & CLASS INFORMATION SECTION ============
@@ -253,13 +260,13 @@ export const exportPupilResult = async (
       })
     ];
 
-    // Add subject rows with increased spacing
+    // Add subject rows with compact spacing
     pupil.subjects.forEach(subject => {
       const grade = calculateGrade(subject.total);
       const remark = calculateRemark(subject.total);
       resultRows.push(
         new TableRow({
-          height: { value: 400, rule: 'atLeast' },
+          height: { value: 200, rule: 'atLeast' },
           children: [
             new TableCell({ 
               margins: { top: 100, bottom: 100, left: 100, right: 100 },
@@ -377,23 +384,111 @@ export const exportPupilResult = async (
       children.push(new Paragraph(''));
     }
 
-    // ============ COMMENTS & SIGNATURE SECTION ============
-    children.push(
-      new Paragraph({ children: [new TextRun({ text: 'Teacher\'s Comment:', bold: true, size: 24 })] }),
-      new Paragraph('_'.repeat(80)),
-      new Paragraph('_'.repeat(80)),
-      new Paragraph('_'.repeat(80)),
-      new Paragraph('')
-    );
+    // ============ ATTENDANCE & SIGNATURE SECTION ============
+    const attendanceRows: TableRow[] = [
+      new TableRow({
+        height: { value: 200, rule: 'atLeast' },
+        children: [
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'No. of days school was opened:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: options.daysSchoolOpened?.toString() || '', size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'No. of days in attendance:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: options.daysInAttendance?.toString() || '', size: 18 })] })]
+          })
+        ]
+      }),
+      new TableRow({
+        height: { value: 200, rule: 'atLeast' },
+        children: [
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Next term begins on:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: options.nextTermBegins || '', size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph('')]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph('')]
+          })
+        ]
+      }),
+      new TableRow({
+        height: { value: 200, rule: 'atLeast' },
+        children: [
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Class Teacher:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: options.classTeacher || '', size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Comment:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: pupil.classTeacherComment || '', size: 18 })] })]
+          })
+        ]
+      }),
+      new TableRow({
+        height: { value: 200, rule: 'atLeast' },
+        children: [
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Head Teacher:', bold: true, size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: pupil.headTeacherComment || '', size: 18 })] })]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph('')]
+          }),
+          new TableCell({
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph('')]
+          })
+        ]
+      })
+    ];
+    children.push(new Table({ rows: attendanceRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+    children.push(new Paragraph(''));
 
-    // Signature section
-    children.push(
-      new Paragraph('Class Teacher Signature: ________________     Date: ___________'),
-      new Paragraph(''),
-      new Paragraph('Head of School Signature: ________________     Date: ___________')
-    );
-
-    const doc = new Document({ sections: [{ children }] });
+    const doc = new Document({ 
+      sections: [{ 
+        children,
+        properties: {
+          page: {
+            margin: {
+              top: 360,     // 0.5 inch
+              bottom: 360,  // 0.5 inch
+              left: 360,    // 0.5 inch
+              right: 360    // 0.5 inch
+            }
+          }
+        }
+      }] 
+    });
     const blob = await Packer.toBlob(doc);
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');

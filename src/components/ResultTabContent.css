@@ -321,6 +321,139 @@
   background-color: #1a2a3a;
 }
 
+/* Attendance & Signature Section */
+.attendance-signature-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.attendance-signature-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.attendance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.attendance-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.attendance-field label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.attendance-field input[type="number"],
+.attendance-field input[type="date"],
+.attendance-field textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.attendance-field input[type="number"]:focus,
+.attendance-field input[type="date"]:focus,
+.attendance-field textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.signature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.signature-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.signature-field label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.signature-field textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.signature-field textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Dark mode for attendance section */
+.dark-mode .attendance-signature-section {
+  background: #242424;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .attendance-signature-section h3 {
+  color: #e8e8e8;
+  border-bottom-color: #667eea;
+}
+
+.dark-mode .attendance-field label,
+.dark-mode .signature-field label {
+  color: #e8e8e8;
+}
+
+.dark-mode .attendance-field input[type="number"],
+.dark-mode .attendance-field input[type="date"],
+.dark-mode .attendance-field textarea,
+.dark-mode .signature-field textarea {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e8e8e8;
+}
+
+.dark-mode .attendance-field input[type="number"]:focus,
+.dark-mode .attendance-field input[type="date"]:focus,
+.dark-mode .attendance-field textarea:focus,
+.dark-mode .signature-field textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .attendance-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .signature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .dark-mode .subject-navigation {
   background: #242424;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);

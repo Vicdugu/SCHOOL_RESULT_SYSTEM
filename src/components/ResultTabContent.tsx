@@ -50,6 +50,13 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   const [toastMessage, setToastMessage] = useState<string>('');
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   
+  // New attendance and signature fields
+  const [daysSchoolOpened, setDaysSchoolOpened] = useState<number>(0);
+  const [daysInAttendance, setDaysInAttendance] = useState<number>(0);
+  const [nextTermBegins, setNextTermBegins] = useState<string>('');
+  const [classTeacherComment, setClassTeacherComment] = useState<string>('');
+  const [headTeacherComment, setHeadTeacherComment] = useState<string>('');
+  
   // Use props or fallback to local state
   const activeSubject = propActiveSubject !== undefined ? propActiveSubject : 0;
   const setActiveSubject = setPropsActiveSubject || (() => {});
@@ -469,7 +476,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             total: s.total,
             rank: s.rank
           })),
-          observations: pupil.observations
+          observations: pupil.observations,
+          classTeacherComment: classTeacherComment,
+          headTeacherComment: headTeacherComment
         };
 
         const exportOptions = {
@@ -480,7 +489,11 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           term: 'First Term',
           academicYear: '2025/2026',
           totalStudentsInClass: pupilsToExport.length,
-          classAverage: classAverage
+          classAverage: classAverage,
+          daysSchoolOpened: daysSchoolOpened,
+          daysInAttendance: daysInAttendance,
+          nextTermBegins: nextTermBegins,
+          classTeacher: schoolInfo.classTeacher || ''
         };
 
         await exportPupilResult(pupilData, exportOptions);
@@ -535,7 +548,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           total: s.total,
           rank: s.rank
         })),
-        observations: studentToExport.observations
+        observations: studentToExport.observations,
+        classTeacherComment: classTeacherComment,
+        headTeacherComment: headTeacherComment
       };
 
       const exportOptions = {
@@ -546,7 +561,11 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         term: 'First Term',
         academicYear: '2025/2026',
         totalStudentsInClass: pupilsWithNames.length,
-        classAverage: classAverage
+        classAverage: classAverage,
+        daysSchoolOpened: daysSchoolOpened,
+        daysInAttendance: daysInAttendance,
+        nextTermBegins: nextTermBegins,
+        classTeacher: schoolInfo.classTeacher || ''
       };
 
       await exportPupilResult(pupilData, exportOptions);
@@ -635,6 +654,61 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             }))}
             onObservationChange={handleObservationChange}
           />
+          
+          {/* Attendance and Signature Section */}
+          <div className="attendance-signature-section">
+            <h3>Attendance & Signature Information</h3>
+            <div className="attendance-grid">
+              <div className="attendance-field">
+                <label>Number of days school was opened:</label>
+                <input
+                  type="number"
+                  value={daysSchoolOpened}
+                  onChange={(e) => setDaysSchoolOpened(Number(e.target.value))}
+                  placeholder="e.g., 190"
+                  min="0"
+                />
+              </div>
+              <div className="attendance-field">
+                <label>Number of days in attendance:</label>
+                <input
+                  type="number"
+                  value={daysInAttendance}
+                  onChange={(e) => setDaysInAttendance(Number(e.target.value))}
+                  placeholder="e.g., 180"
+                  min="0"
+                />
+              </div>
+            </div>
+            <div className="attendance-field">
+              <label>Next term begins on:</label>
+              <input
+                type="date"
+                value={nextTermBegins}
+                onChange={(e) => setNextTermBegins(e.target.value)}
+              />
+            </div>
+            <div className="signature-grid">
+              <div className="signature-field">
+                <label>Class Teacher Comment:</label>
+                <textarea
+                  value={classTeacherComment}
+                  onChange={(e) => setClassTeacherComment(e.target.value)}
+                  placeholder="Enter class teacher comment"
+                  rows={2}
+                />
+              </div>
+              <div className="signature-field">
+                <label>Head Teacher Comment:</label>
+                <textarea
+                  value={headTeacherComment}
+                  onChange={(e) => setHeadTeacherComment(e.target.value)}
+                  placeholder="Enter head teacher comment"
+                  rows={2}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
       {selectedPupil && (
