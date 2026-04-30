@@ -17,6 +17,7 @@ interface PupilData {
   registrationNumber?: string;
   sex?: string;
   subjects: SubjectResult[];
+  observations?: { [key: string]: number };
 }
 
 interface ExportOptions {
@@ -59,6 +60,21 @@ const calculateRemark = (total: number): string => {
     default:
       return '-';
   }
+};
+
+const ATTRIBUTES = {
+  Classroom: ['Punctuality', 'Attendance', 'Participation', 'Attitude to work', 'Attentiveness', 'Assignments', 'Handwriting'],
+  Psychological: ['Emotional stability', 'Initiative/Creativity', 'Self-Control', 'Sense of Responsibility', 'Relationship with Students', 'Relationship with Staff', 'Leadership Trait'],
+  Social: ['Neatness', 'Politeness', 'Honesty', 'Verbal Fluency'],
+  Physical: ['Physical Health', 'Games & Sports', 'Dexterity']
+};
+
+const RATING_KEYS: { [key: number]: string } = {
+  5: 'Excellent',
+  4: 'Very good',
+  3: 'Good',
+  2: 'Weak',
+  1: 'Can do better'
 };
 
 export const exportPupilResult = async (
@@ -292,6 +308,88 @@ export const exportPupilResult = async (
 
     children.push(new Table({ rows: resultRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
     children.push(new Paragraph(''));
+
+    // ============ AFFECTIVE & PSYCHOMOTOR OBSERVATIONS ============
+    if (pupil.observations && Object.keys(pupil.observations).length > 0) {
+      children.push(
+        new Paragraph({ children: [new TextRun({ text: 'Affective & Psychomotor Observations', bold: true, size: 28 })] }),
+        new Paragraph('(Behavioral & Physical Abilities)'),
+        new Paragraph('')
+      );
+
+      // Create observations table
+      const observationRows: TableRow[] = [];
+      
+      // Add header row with categories and attributes
+      const headerCells: TableCell[] = [
+        new TableCell({
+          rowSpan: 2,
+          margins: { top: 100, bottom: 100, left: 100, right: 100 },
+          children: [new Paragraph({ children: [new TextRun({ text: 'Attribute', bold: true, size: 20 })] })]
+        })
+      ];
+
+      // Add rating column header
+      headerCells.push(
+        new TableCell({
+          rowSpan: 2,
+          margins: { top: 100, bottom: 100, left: 100, right: 100 },
+          children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 20 })] })]
+        })
+      );
+
+      observationRows.push(new TableRow({ children: headerCells }));
+
+      // Add all attributes
+      Object.entries(ATTRIBUTES).forEach(([category, attributes]) => {
+        attributes.forEach((attribute, index) => {
+          const attributeCells: TableCell[] = [
+            new TableCell({
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: index === 0 ? category + ': ' + attribute : attribute,
+                      bold: index === 0,
+                      size: 20
+                    })
+                  ]
+                })
+              ]
+            })
+          ];
+
+          const ratingValue = pupil.observations?.[attribute] || 0;
+          const ratingText = ratingValue ? RATING_KEYS[ratingValue] : '-';
+
+          attributeCells.push(
+            new TableCell({
+              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              children: [new Paragraph({ children: [new TextRun({ text: ratingText, size: 20 })] })]
+            })
+          );
+
+          observationRows.push(new TableRow({ children: attributeCells }));
+        });
+      });
+
+      children.push(new Table({ rows: observationRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+      children.push(new Paragraph(''));
+
+      // Add legend
+      children.push(
+        new Paragraph({ children: [new TextRun({ text: 'Rating Legend:', bold: true, size: 20 })] })
+      );
+      Object.entries(RATING_KEYS).forEach(([key, value]) => {
+        children.push(
+          new Paragraph({
+            children: [new TextRun({ text: `${key} = ${value}`, size: 20 })]
+          })
+        );
+      });
+      children.push(new Paragraph(''));
+    }
 
     // ============ COMMENTS & SIGNATURE SECTION ============
     children.push(

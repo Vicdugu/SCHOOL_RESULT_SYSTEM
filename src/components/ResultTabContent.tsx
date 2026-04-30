@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ResultsTable from './ResultsTable';
+import ObservationsTable from './ObservationsTable';
 import PupilProfile from './PupilProfile';
 import ExportOptionsModal from './ExportOptionsModal';
 import './ResultTabContent.css';
@@ -10,6 +11,7 @@ interface PupilResult {
   sex: string;
   registrationNumber: string;
   subjects: SubjectResult[];
+  observations: { [key: string]: number };
 }
 
 interface SubjectResult {
@@ -94,7 +96,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         exam: 0,
         total: 0,
         rank: 0
-      }))
+      })),
+      observations: {}
     }));
   });
 
@@ -122,7 +125,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           exam: 0,
           total: 0,
           rank: 0
-        }))
+        })),
+        observations: {}
       })));
     }
   }, [classId]);
@@ -243,6 +247,22 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
     setPupils(finalPupils);
   };
 
+  const handleObservationChange = (pupilId: string, attribute: string, value: number) => {
+    const updatedPupils = pupils.map(pupil => {
+      if (pupil.id === pupilId) {
+        return {
+          ...pupil,
+          observations: {
+            ...pupil.observations,
+            [attribute]: value
+          }
+        };
+      }
+      return pupil;
+    });
+    setPupils(updatedPupils);
+  };
+
   const handlePupilNameChange = (pupilId: string, newName: string) => {
     const updatedPupils = pupils.map(pupil => {
       if (pupil.id === pupilId) {
@@ -266,7 +286,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         exam: 0,
         total: 0,
         rank: 0
-      }))
+      })),
+      observations: {}
     };
     setPupils([...pupils, newPupil]);
   };
@@ -447,7 +468,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             exam: s.exam,
             total: s.total,
             rank: s.rank
-          }))
+          })),
+          observations: pupil.observations
         };
 
         const exportOptions = {
@@ -512,7 +534,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           exam: s.exam,
           total: s.total,
           rank: s.rank
-        }))
+        })),
+        observations: studentToExport.observations
       };
 
       const exportOptions = {
@@ -604,6 +627,14 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
               ➕ Add Pupil Row
             </button>
           </div>
+          <ObservationsTable
+            pupils={pupils.map(p => ({
+              id: p.id,
+              name: p.name,
+              observations: p.observations
+            }))}
+            onObservationChange={handleObservationChange}
+          />
         </div>
       )}
       {selectedPupil && (
