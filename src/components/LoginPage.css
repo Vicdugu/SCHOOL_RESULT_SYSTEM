@@ -230,10 +230,14 @@
 
 .login-footer p.created-by {
   margin-top: 12px;
-  font-size: 11px;
-  color: #bbb;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #d4af37;
   font-style: italic;
-  font-weight: 500;
+  font-weight: 600;
+  background-color: #000000;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 /* Forgot Password Link */
