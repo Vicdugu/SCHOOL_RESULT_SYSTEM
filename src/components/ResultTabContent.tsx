@@ -452,6 +452,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         const exportOptions = {
           className: className,
           schoolName: schoolInfo.name || 'School Result Management System',
+          schoolAddress: schoolInfo.address || 'School Address',
           schoolLogo: schoolInfo.logo,
           term: 'First Term',
           academicYear: '2025/2026',
@@ -516,6 +517,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
       const exportOptions = {
         className: className,
         schoolName: schoolInfo.name || 'School Result Management System',
+        schoolAddress: schoolInfo.address || 'School Address',
         schoolLogo: schoolInfo.logo,
         term: 'First Term',
         academicYear: '2025/2026',

@@ -22,6 +22,7 @@ interface PupilData {
 interface ExportOptions {
   className: string;
   schoolName?: string;
+  schoolAddress?: string;
   schoolLogo?: string; // Base64 encoded image
   term?: string;
   academicYear?: string;
@@ -76,7 +77,7 @@ export const exportPupilResult = async (
       rows: [
         new TableRow({
           children: [
-            // Left cell: School name
+            // Left cell: School name and address
             new TableCell({
               width: { size: 50, type: WidthType.PERCENTAGE },
               borders: boldBorders,
@@ -85,6 +86,11 @@ export const exportPupilResult = async (
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 52, bold: true })],
                   alignment: AlignmentType.LEFT
+                }),
+                new Paragraph({
+                  children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 24 })],
+                  alignment: AlignmentType.LEFT,
+                  spacing: { before: 100 }
                 })
               ]
             }),
