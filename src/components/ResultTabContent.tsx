@@ -902,17 +902,23 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
                     <div className="signature-field">
                       <label>Head Teacher Comment:</label>
                       <select
-                        value={currentHeadTeacherComment}
                         onChange={(e) => setCurrentHeadTeacherComment(e.target.value)}
                         className="comment-select"
                       >
-                        <option value="">-- Select a comment --</option>
+                        <option value="">-- Select a template --</option>
                         {HEAD_TEACHER_COMMENTS.map((comment, index) => (
                           <option key={index} value={comment}>
                             {comment}
                           </option>
                         ))}
                       </select>
+                      <textarea
+                        value={currentHeadTeacherComment}
+                        onChange={(e) => setCurrentHeadTeacherComment(e.target.value)}
+                        placeholder="Edit or enter head teacher comment"
+                        rows={3}
+                        className="comment-textarea"
+                      />
                     </div>
                   </div>
                 </div>
