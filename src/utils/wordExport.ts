@@ -77,16 +77,6 @@ const ATTRIBUTES = {
   Physical: ['Physical Health', 'Games & Sports', 'Dexterity']
 };
 
-// Mapping of class names to dedicated teachers
-const CLASS_TEACHERS: { [key: string]: string } = {
-  'Class 1': 'Teacher 1',
-  'Class 2': 'Teacher 2',
-  'Class 3': 'Teacher 3',
-  'Class 4': 'Teacher 4',
-  'Class 5': 'Teacher 5',
-  'Class 6': 'Teacher 6'
-};
-
 export const exportPupilResult = async (
   pupil: PupilData,
   options: ExportOptions
@@ -505,7 +495,7 @@ export const exportPupilResult = async (
           new TableCell({
             shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: CLASS_TEACHERS[options.className] || options.classTeacher || '', size: 18, bold: true })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: options.classTeacher || '', size: 18, bold: true })] })]
           }),
           new TableCell({
             shading: { fill: 'DCE6F1' },
@@ -530,17 +520,17 @@ export const exportPupilResult = async (
           new TableCell({
             shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph({ children: [new TextRun({ text: pupil.headTeacherComment || '', size: 18 })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: options.headOfSchool || '', size: 18, bold: true })] })]
           }),
           new TableCell({
             shading: { fill: 'DCE6F1' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph('')]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Comment:', bold: true, size: 18 })] })]
           }),
           new TableCell({
             shading: { fill: 'FFFFFF' },
             margins: { top: 60, bottom: 60, left: 80, right: 80 },
-            children: [new Paragraph('')]
+            children: [new Paragraph({ children: [new TextRun({ text: pupil.headTeacherComment || '', size: 18 })] })]
           })
         ]
       })

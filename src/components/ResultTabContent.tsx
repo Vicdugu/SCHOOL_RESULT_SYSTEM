@@ -16,6 +16,8 @@ interface PupilResult {
   nextTermBegins?: string;
   classTeacherComment?: string;
   headTeacherComment?: string;
+  classTeacherName?: string;
+  headTeacherName?: string;
 }
 
 interface SubjectResult {
@@ -75,6 +77,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   const [currentNextTermBegins, setCurrentNextTermBegins] = useState<string>('');
   const [currentClassTeacherComment, setCurrentClassTeacherComment] = useState<string>('');
   const [currentHeadTeacherComment, setCurrentHeadTeacherComment] = useState<string>('');
+  const [currentClassTeacherName, setCurrentClassTeacherName] = useState<string>('');
+  const [currentHeadTeacherName, setCurrentHeadTeacherName] = useState<string>('');
   
   // Use props or fallback to local state
   const activeSubject = propActiveSubject !== undefined ? propActiveSubject : 0;
@@ -476,6 +480,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
       setCurrentNextTermBegins(student.nextTermBegins || '');
       setCurrentClassTeacherComment(student.classTeacherComment || '');
       setCurrentHeadTeacherComment(student.headTeacherComment || '');
+      setCurrentClassTeacherName(student.classTeacherName || '');
+      setCurrentHeadTeacherName(student.headTeacherName || '');
       setBehaviorStudentId(pupilId);
     }
   };
@@ -501,7 +507,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           daysInAttendance: currentDaysInAttendance,
           nextTermBegins: currentNextTermBegins,
           classTeacherComment: currentClassTeacherComment,
-          headTeacherComment: currentHeadTeacherComment
+          headTeacherComment: currentHeadTeacherComment,
+          classTeacherName: currentClassTeacherName,
+          headTeacherName: currentHeadTeacherName
         };
       }
       return pupil;
@@ -588,7 +596,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
           daysSchoolOpened: pupil.daysSchoolOpened || 0,
           daysInAttendance: pupil.daysInAttendance || 0,
           nextTermBegins: pupil.nextTermBegins || '',
-          classTeacher: schoolInfo.classTeacher || ''
+          classTeacher: pupil.classTeacherName || schoolInfo.classTeacher || '',
+          headOfSchool: pupil.headTeacherName || schoolInfo.headOfSchool || ''
         };
 
         await exportPupilResult(pupilData, exportOptions);
@@ -645,7 +654,9 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         })),
         observations: studentToExport.observations,
         classTeacherComment: studentToExport.classTeacherComment,
-        headTeacherComment: studentToExport.headTeacherComment
+        headTeacherComment: studentToExport.headTeacherComment,
+        classTeacherName: studentToExport.classTeacherName,
+        headTeacherName: studentToExport.headTeacherName
       };
 
       const exportOptions = {
@@ -660,7 +671,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
         daysSchoolOpened: studentToExport.daysSchoolOpened || 0,
         daysInAttendance: studentToExport.daysInAttendance || 0,
         nextTermBegins: studentToExport.nextTermBegins || '',
-        classTeacher: schoolInfo.classTeacher || ''
+        classTeacher: studentToExport.classTeacherName || schoolInfo.classTeacher || '',
+        headOfSchool: studentToExport.headTeacherName || schoolInfo.headOfSchool || ''
       };
 
       await exportPupilResult(pupilData, exportOptions);
@@ -888,6 +900,26 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
                       value={currentNextTermBegins}
                       onChange={(e) => setCurrentNextTermBegins(e.target.value)}
                     />
+                  </div>
+                  <div className="attendance-grid">
+                    <div className="attendance-field">
+                      <label>Class Teacher Name:</label>
+                      <input
+                        type="text"
+                        value={currentClassTeacherName}
+                        onChange={(e) => setCurrentClassTeacherName(e.target.value)}
+                        placeholder="Enter class teacher name"
+                      />
+                    </div>
+                    <div className="attendance-field">
+                      <label>Head Teacher Name:</label>
+                      <input
+                        type="text"
+                        value={currentHeadTeacherName}
+                        onChange={(e) => setCurrentHeadTeacherName(e.target.value)}
+                        placeholder="Enter head teacher name"
+                      />
+                    </div>
                   </div>
                   <div className="signature-grid">
                     <div className="signature-field">
