@@ -69,14 +69,6 @@ const ATTRIBUTES = {
   Physical: ['Physical Health', 'Games & Sports', 'Dexterity']
 };
 
-const RATING_KEYS: { [key: number]: string } = {
-  5: 'Excellent',
-  4: 'Very good',
-  3: 'Good',
-  2: 'Weak',
-  1: 'Can do better'
-};
-
 export const exportPupilResult = async (
   pupil: PupilData,
   options: ExportOptions
@@ -317,77 +309,71 @@ export const exportPupilResult = async (
         new Paragraph('')
       );
 
-      // Create observations table
+      // Create side-by-side observations table with all 4 categories
       const observationRows: TableRow[] = [];
+      const categories = Object.entries(ATTRIBUTES);
       
-      // Add header row with categories and attributes
-      const headerCells: TableCell[] = [
-        new TableCell({
-          rowSpan: 2,
-          margins: { top: 100, bottom: 100, left: 100, right: 100 },
-          children: [new Paragraph({ children: [new TextRun({ text: 'Attribute', bold: true, size: 20 })] })]
-        })
-      ];
-
-      // Add rating column header
-      headerCells.push(
-        new TableCell({
-          rowSpan: 2,
-          margins: { top: 100, bottom: 100, left: 100, right: 100 },
-          children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 20 })] })]
-        })
-      );
-
+      // Add header row with category names
+      const headerCells: TableCell[] = [];
+      categories.forEach(([category]) => {
+        headerCells.push(
+          new TableCell({
+            margins: { top: 100, bottom: 100, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: category, bold: true, size: 18 })] })]
+          })
+        );
+        headerCells.push(
+          new TableCell({
+            margins: { top: 100, bottom: 100, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rating', bold: true, size: 18 })] })]
+          })
+        );
+      });
       observationRows.push(new TableRow({ children: headerCells }));
 
-      // Add all attributes
-      Object.entries(ATTRIBUTES).forEach(([category, attributes]) => {
-        attributes.forEach((attribute, index) => {
-          const attributeCells: TableCell[] = [
-            new TableCell({
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [
-                new Paragraph({
-                  children: [
-                    new TextRun({
-                      text: index === 0 ? category + ': ' + attribute : attribute,
-                      bold: index === 0,
-                      size: 20
-                    })
-                  ]
-                })
-              ]
-            })
-          ];
+      // Determine max attributes count
+      const maxAttributes = Math.max(...categories.map(([_, attrs]) => attrs.length));
 
-          const ratingValue = pupil.observations?.[attribute] || 0;
-          const ratingText = ratingValue ? RATING_KEYS[ratingValue] : '-';
-
-          attributeCells.push(
+      // Add attribute rows
+      for (let i = 0; i < maxAttributes; i++) {
+        const rowCells: TableCell[] = [];
+        
+        categories.forEach(([_, attributes]) => {
+          const attribute = attributes[i];
+          const ratingValue = attribute ? (pupil.observations?.[attribute] || 0) : 0;
+          
+          // Attribute cell
+          rowCells.push(
             new TableCell({
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: ratingText, size: 20 })] })]
+              margins: { top: 80, bottom: 80, left: 80, right: 80 },
+              children: [new Paragraph({ children: [new TextRun({ text: attribute || '', size: 16 })] })]
             })
           );
 
-          observationRows.push(new TableRow({ children: attributeCells }));
+          // Rating cell (use number only)
+          rowCells.push(
+            new TableCell({
+              margins: { top: 80, bottom: 80, left: 80, right: 80 },
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.CENTER,
+                  children: [new TextRun({ text: ratingValue ? ratingValue.toString() : '-', size: 16, bold: true })]
+                })
+              ]
+            })
+          );
         });
-      });
+        
+        observationRows.push(new TableRow({ children: rowCells }));
+      }
 
       children.push(new Table({ rows: observationRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
       children.push(new Paragraph(''));
 
       // Add legend
       children.push(
-        new Paragraph({ children: [new TextRun({ text: 'Rating Legend:', bold: true, size: 20 })] })
+        new Paragraph({ children: [new TextRun({ text: 'Rating Scale: 5 = Excellent | 4 = Very good | 3 = Good | 2 = Weak | 1 = Can do better', size: 18 })] })
       );
-      Object.entries(RATING_KEYS).forEach(([key, value]) => {
-        children.push(
-          new Paragraph({
-            children: [new TextRun({ text: `${key} = ${value}`, size: 20 })]
-          })
-        );
-      });
       children.push(new Paragraph(''));
     }
 
