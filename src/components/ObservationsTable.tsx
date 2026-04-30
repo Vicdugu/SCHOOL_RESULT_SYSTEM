@@ -25,9 +25,19 @@ const RATING_KEYS = {
   1: 'Can do better'
 };
 
-const ObservationsTable: React.FC<ObservationsTableProps> = ({ pupils, onObservationChange }) => {
+const ObservationsTable: React.FC<ObservationsTableProps> = ({ pupils = [], onObservationChange }) => {
+  // Ensure ATTRIBUTES is defined
+  if (!ATTRIBUTES) {
+    return <div>Error: Attributes not loaded</div>;
+  }
+
   // Get max number of attributes in any category for consistent table sizing
-  const maxAttributesInCategory = Math.max(...Object.values(ATTRIBUTES).map(attrs => attrs.length));
+  const attributeValues = Object.values(ATTRIBUTES);
+  const maxAttributesInCategory = attributeValues.length > 0 ? Math.max(...attributeValues.map(attrs => attrs.length)) : 0;
+
+  if (maxAttributesInCategory === 0) {
+    return <div>Error: No attributes found</div>;
+  }
 
   return (
     <div className="observations-container">

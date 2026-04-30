@@ -631,7 +631,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             pupils={pupils.map(p => ({
               id: p.id,
               name: p.name,
-              observations: p.observations
+              observations: p.observations || {}
             }))}
             onObservationChange={handleObservationChange}
           />
