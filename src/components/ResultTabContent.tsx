@@ -230,11 +230,14 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
       }
     };
 
-    // Check for updates every 500ms (when admin applies subjects)
-    const interval = setInterval(handleStorageChange, 500);
+    // Check for updates every 200ms for faster response
+    const interval = setInterval(handleStorageChange, 200);
     
     // Also listen for storage events (cross-tab updates)
     window.addEventListener('storage', handleStorageChange);
+    
+    // Check immediately when component mounts
+    handleStorageChange();
     
     return () => {
       clearInterval(interval);
