@@ -46,6 +46,31 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.admin-notice {
+  display: inline-block;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subject-management-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+  padding: 12px;
+  background-color: #f0f4ff;
+  border-left: 3px solid #667eea;
+  border-radius: 4px;
+}
+
 .subject-management h3 {
   margin: 0 0 16px 0;
   font-size: 16px;
@@ -804,4 +829,21 @@
 
 .dark-mode .behavior-save-section {
   border-top-color: #3a3a3a;
+}
+
+/* Dark mode for admin notice and management description */
+.dark-mode .admin-notice {
+  background-color: #3a3a2a;
+  border-color: #5a5a2a;
+  color: #c9aa00;
+}
+
+.dark-mode .subject-management-description {
+  background-color: #1a2a4a;
+  border-left-color: #667eea;
+  color: #b8b8b8;
+}
+
+.dark-mode .subject-management-description strong {
+  color: #ddd;
 }

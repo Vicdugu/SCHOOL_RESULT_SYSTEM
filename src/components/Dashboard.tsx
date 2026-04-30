@@ -150,12 +150,14 @@ const Dashboard: React.FC = () => {
                   {classes.find(c => c.id === activeClass)?.name}
                 </div>
                 <nav className="subject-tabs">
-                  <button
-                    className={`subject-tab ${activeSubject === -1 ? 'active' : ''}`}
-                    onClick={() => setActiveSubject(-1)}
-                  >
-                    ⚙️ Manage Subjects
-                  </button>
+                  {user?.role === 'admin' && (
+                    <button
+                      className={`subject-tab ${activeSubject === -1 ? 'active' : ''}`}
+                      onClick={() => setActiveSubject(-1)}
+                    >
+                      ⚙️ Manage Subjects
+                    </button>
+                  )}
                   {subjects.map((subject, index) => (
                     <button
                       key={index}
@@ -179,6 +181,7 @@ const Dashboard: React.FC = () => {
             setActiveSubject={setActiveSubject}
             subjects={subjects}
             setSubjects={setSubjects}
+            userRole={user?.role}
           />
         </main>
       </div>

@@ -37,6 +37,7 @@ interface ResultTabContentProps {
   setActiveSubject: (index: number) => void;
   subjects: string[];
   setSubjects: (subjects: string[]) => void;
+  userRole?: 'teacher' | 'admin';
 }
 
 const DEFAULT_SUBJECTS = ['English', 'Mathematics', 'Science', 'History', 'Geography', 'Civic Studies', 'Physical Education'];
@@ -60,7 +61,8 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   activeSubject: propActiveSubject,
   setActiveSubject: setPropsActiveSubject,
   subjects: propSubjects,
-  setSubjects: setPropsSubjects
+  setSubjects: setPropsSubjects,
+  userRole = 'teacher'
 }) => {
   const [selectedPupilId, setSelectedPupilId] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string>('');
@@ -216,7 +218,7 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
 
   // Calculate totals and rankings for the current subject
   const currentSubject = activeSubject >= 0 ? subjects[activeSubject] : '';
-  const isManagingSubjects = activeSubject === MANAGE_SUBJECTS_INDEX;
+  const isManagingSubjects = userRole === 'admin' && activeSubject === MANAGE_SUBJECTS_INDEX;
   const calculateRankings = (subjectIndex: number, pupilist: PupilResult[] = pupils) => {
     const updatedPupils = pupilist.map(pupil => {
       return {
@@ -704,7 +706,14 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
 
       {isManagingSubjects ? (
         <div className="subject-management">
-          <h3>Manage Subjects:</h3>
+          <div className="admin-notice">
+            <span>🔒 Admin Only Feature</span>
+          </div>
+          <h3>Manage Subjects for {className}:</h3>
+          <p className="subject-management-description">
+            Configure and manage subjects for this class. Changes made here will only affect this class's current results.
+            <br/>To apply subjects to multiple classes, use the <strong>Subject Management</strong> panel in Admin Control.
+          </p>
           <div className="subject-list">
             {subjects.map((subject, index) => (
               <div key={index} className="subject-item">

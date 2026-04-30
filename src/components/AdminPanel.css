@@ -405,6 +405,350 @@
   color: #b0b0b0;
 }
 
+/* Admin Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #f9f9f9;
+}
+
+.admin-tab {
+  flex: 1;
+  padding: 16px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.admin-tab:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.admin-tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+  background-color: #f5f5ff;
+}
+
+/* Subject Management Section */
+.subject-management-section {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.subject-management-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+.subject-input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.subject-input-field {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.subject-input-field:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.add-subject-btn {
+  padding: 12px 24px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.add-subject-btn:hover {
+  background-color: #229954;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+/* Current Subjects List */
+.current-subjects {
+  margin-bottom: 20px;
+}
+
+.current-subjects h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subjects-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.subject-item-admin {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.subject-item-admin:hover {
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+}
+
+.subject-name {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.subject-edit-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #667eea;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.subject-edit-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.edit-subject-btn,
+.save-edit-btn,
+.cancel-edit-btn {
+  padding: 6px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.edit-subject-btn:hover,
+.save-edit-btn:hover {
+  transform: scale(1.2);
+}
+
+.cancel-edit-btn:hover {
+  transform: scale(1.1);
+}
+
+.delete-subject-btn-admin {
+  padding: 6px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.delete-subject-btn-admin:hover {
+  transform: scale(1.2);
+}
+
+/* Class Selection */
+.class-selection {
+  margin-bottom: 20px;
+}
+
+.class-selection h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.class-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.class-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.class-checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #667eea;
+}
+
+.class-checkbox-label:hover {
+  color: #667eea;
+}
+
+/* Apply Actions */
+.apply-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.apply-btn,
+.apply-all-btn {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.apply-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.apply-btn:hover:not(:disabled) {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.apply-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.apply-all-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.apply-all-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.dark-mode .admin-tabs {
+  background-color: #2a2a2a;
+  border-bottom-color: #3a3a3a;
+}
+
+.dark-mode .admin-tab {
+  color: #aaa;
+}
+
+.dark-mode .admin-tab:hover {
+  background-color: #3a3a3a;
+  color: #ddd;
+}
+
+.dark-mode .admin-tab.active {
+  color: #8aa8ff;
+  background-color: #1a2a4a;
+}
+
+.dark-mode .subject-management-section {
+  background-color: #1e1e1e;
+  color: #ddd;
+}
+
+.dark-mode .subject-management-section h3,
+.dark-mode .current-subjects h4,
+.dark-mode .class-selection h4 {
+  color: #ddd;
+}
+
+.dark-mode .subject-input-field {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #ddd;
+}
+
+.dark-mode .subject-input-field:focus {
+  border-color: #667eea;
+}
+
+.dark-mode .subject-item-admin {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.dark-mode .subject-item-admin:hover {
+  background-color: #3a3a3a;
+  border-color: #4a4a4a;
+}
+
+.dark-mode .subject-name {
+  color: #ddd;
+}
+
+.dark-mode .subject-edit-input {
+  background-color: #1a1a1a;
+  color: #ddd;
+  border-color: #667eea;
+}
+
+.dark-mode .class-checkboxes {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.dark-mode .class-checkbox-label {
+  color: #ddd;
+}
+
+.dark-mode .apply-actions {
+  border-top-color: #3a3a3a;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-panel-modal {
