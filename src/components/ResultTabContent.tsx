@@ -41,6 +41,17 @@ const DEFAULT_SUBJECTS = ['English', 'Mathematics', 'Science', 'History', 'Geogr
 const INITIAL_PUPILS = 10;
 const MANAGE_SUBJECTS_INDEX = -1;
 
+const HEAD_TEACHER_COMMENTS = [
+  'Excellent result, please keep it up!',
+  'Allahumma baarik!',
+  'An outstanding result',
+  'Satisfactory, you can do better next term.',
+  'Increase your effort and attention to details.',
+  'A reliable and hardworking student who consistently meets expectations.',
+  'You have shown improvement in ......., but extra practice with …….. will help you master the material.',
+  'You have grown in confidence this term, especially when speaking in front of the class.'
+];
+
 const ResultTabContent: React.FC<ResultTabContentProps> = ({ 
   classId, 
   className,
@@ -890,12 +901,18 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
                     </div>
                     <div className="signature-field">
                       <label>Head Teacher Comment:</label>
-                      <textarea
+                      <select
                         value={currentHeadTeacherComment}
                         onChange={(e) => setCurrentHeadTeacherComment(e.target.value)}
-                        placeholder="Enter head teacher comment"
-                        rows={3}
-                      />
+                        className="comment-select"
+                      >
+                        <option value="">-- Select a comment --</option>
+                        {HEAD_TEACHER_COMMENTS.map((comment, index) => (
+                          <option key={index} value={comment}>
+                            {comment}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>

@@ -410,6 +410,30 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.signature-field .comment-select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.signature-field .comment-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.signature-field .comment-select option {
+  padding: 8px 12px;
+  background-color: white;
+  color: #333;
+}
+
 /* Dark mode for attendance section */
 .dark-mode .attendance-signature-section {
   background: #242424;
@@ -429,7 +453,8 @@
 .dark-mode .attendance-field input[type="number"],
 .dark-mode .attendance-field input[type="date"],
 .dark-mode .attendance-field textarea,
-.dark-mode .signature-field textarea {
+.dark-mode .signature-field textarea,
+.dark-mode .signature-field .comment-select {
   background-color: #2a2a2a;
   border-color: #3a3a3a;
   color: #e8e8e8;
@@ -438,9 +463,15 @@
 .dark-mode .attendance-field input[type="number"]:focus,
 .dark-mode .attendance-field input[type="date"]:focus,
 .dark-mode .attendance-field textarea:focus,
-.dark-mode .signature-field textarea:focus {
+.dark-mode .signature-field textarea:focus,
+.dark-mode .signature-field .comment-select:focus {
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.dark-mode .signature-field .comment-select option {
+  background-color: #2a2a2a;
+  color: #e8e8e8;
 }
 
 /* Responsive design */
