@@ -117,16 +117,16 @@ export const exportPupilResult = async (
             new TableCell({
               width: { size: 70, type: WidthType.PERCENTAGE },
               borders: boldBorders,
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
                 new Paragraph({
-                  children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 52, bold: true })],
+                  children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })],
                   alignment: AlignmentType.LEFT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 24 })],
+                  children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 18 })],
                   alignment: AlignmentType.LEFT,
-                  spacing: { before: 100 }
+                  spacing: { before: 60 }
                 })
               ]
             }),
@@ -134,7 +134,7 @@ export const exportPupilResult = async (
             new TableCell({
               width: { size: 30, type: WidthType.PERCENTAGE },
               borders: boldBorders,
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: options.schoolLogo
                 ? [
                     new Paragraph({
@@ -171,18 +171,18 @@ export const exportPupilResult = async (
             new TableCell({
               width: { size: 70, type: WidthType.PERCENTAGE },
               borders: boldBorders,
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
                 new Paragraph({
-                  children: [new TextRun({ text: `Name: ${pupil.name}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Name: ${pupil.name}`, bold: true, size: 18 })],
                   alignment: AlignmentType.LEFT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Registration Number: ${pupil.registrationNumber || 'N/A'}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Registration Number: ${pupil.registrationNumber || 'N/A'}`, bold: true, size: 18 })],
                   alignment: AlignmentType.LEFT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Sex: ${pupil.sex || 'N/A'}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Sex: ${pupil.sex || 'N/A'}`, bold: true, size: 18 })],
                   alignment: AlignmentType.LEFT
                 })
               ]
@@ -191,22 +191,22 @@ export const exportPupilResult = async (
             new TableCell({
               width: { size: 30, type: WidthType.PERCENTAGE },
               borders: boldBorders,
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
+              margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
                 new Paragraph({
-                  children: [new TextRun({ text: `Class: ${options.className || ''}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Class: ${options.className || ''}`, bold: true, size: 18 })],
                   alignment: AlignmentType.RIGHT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Number of Students in Class: ${(options.totalStudentsInClass || 0).toString()}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Number of Students in Class: ${(options.totalStudentsInClass || 0).toString()}`, bold: true, size: 18 })],
                   alignment: AlignmentType.RIGHT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Overall Class Average: ${options.classAverage ? options.classAverage.toFixed(2) : 'N/A'}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Overall Class Average: ${options.classAverage ? options.classAverage.toFixed(2) : 'N/A'}`, bold: true, size: 18 })],
                   alignment: AlignmentType.RIGHT
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Student Average: ${studentAverage}`, bold: true, size: 24 })],
+                  children: [new TextRun({ text: `Student Average: ${studentAverage}`, bold: true, size: 18 })],
                   alignment: AlignmentType.RIGHT
                 })
               ]
@@ -223,39 +223,47 @@ export const exportPupilResult = async (
     // ============ RESULTS TABLE ============
     const resultRows = [
       new TableRow({
-        height: { value: 240, rule: 'atLeast' },
+        height: { value: 200, rule: 'atLeast' },
         children: [
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Subject', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Subject', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA1 (20)', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA1', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA2 (20)', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA2', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Exam (60)', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Exam', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Total', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Total', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Grade', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Grade', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Rank', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 20, color: 'FFFFFF' })] })]
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Remark', bold: true, size: 16, color: 'FFFFFF' })] })]
           })
         ]
       })
@@ -298,47 +306,47 @@ export const exportPupilResult = async (
       
       resultRows.push(
         new TableRow({
-          height: { value: 400, rule: 'atLeast' },
+          height: { value: 280, rule: 'atLeast' },
           children: [
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.name, size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.name, size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.ca1.toString(), size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.ca1.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.ca2.toString(), size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.ca2.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.exam.toString(), size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.exam.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.total.toString(), bold: true, size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.total.toString(), bold: true, size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: gradeBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: grade, bold: true, size: 20, color: gradeTextColor })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: grade, bold: true, size: 16, color: gradeTextColor })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
-              margins: { top: 100, bottom: 100, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: remark, size: 20 })] })] 
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: remark, size: 16 })] })] 
             })
           ]
         })
