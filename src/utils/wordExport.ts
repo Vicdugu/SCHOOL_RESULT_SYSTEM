@@ -128,23 +128,21 @@ export const exportPupilResult = async (
               children: [
                 // Logo and school name in a nested structure
                 new Paragraph({
-                  children: options.schoolLogo
-                    ? [
-                        new ImageRun({
-                          data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
-                          transformation: { width: 70, height: 70 },
-                          type: 'png'
-                        }),
-                        new TextRun({ text: '  ' })
-                      ]
-                    : [],
+                  children: [
+                    ...(options.schoolLogo
+                      ? [
+                          new ImageRun({
+                            data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
+                            transformation: { width: 70, height: 70 },
+                            type: 'png'
+                          }),
+                          new TextRun({ text: '  ' })
+                        ]
+                      : []),
+                    new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })
+                  ],
                   alignment: AlignmentType.LEFT,
                   spacing: { after: 0 }
-                }),
-                new Paragraph({
-                  children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })],
-                  alignment: AlignmentType.LEFT,
-                  spacing: { before: options.schoolLogo ? 0 : 60, after: 0 }
                 }),
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 18 })],
