@@ -223,22 +223,6 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                       }}
                       className="score-input"
                     />
-                    <div className="arrow-buttons">
-                      <button
-                        className="arrow-btn up-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'ca1', 'up', subject_data.ca1)}
-                        title="Increase CA1"
-                      >
-                        ▲
-                      </button>
-                      <button
-                        className="arrow-btn down-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'ca1', 'down', subject_data.ca1)}
-                        title="Decrease CA1"
-                      >
-                        ▼
-                      </button>
-                    </div>
                   </div>
                 </td>
                 <td className="score-col">
@@ -263,22 +247,6 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                       }}
                       className="score-input"
                     />
-                    <div className="arrow-buttons">
-                      <button
-                        className="arrow-btn up-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'ca2', 'up', subject_data.ca2)}
-                        title="Increase CA2"
-                      >
-                        ▲
-                      </button>
-                      <button
-                        className="arrow-btn down-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'ca2', 'down', subject_data.ca2)}
-                        title="Decrease CA2"
-                      >
-                        ▼
-                      </button>
-                    </div>
                   </div>
                 </td>
                 <td className="score-col">
@@ -303,22 +271,6 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                       }}
                       className="score-input"
                     />
-                    <div className="arrow-buttons">
-                      <button
-                        className="arrow-btn up-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'exam', 'up', subject_data.exam)}
-                        title="Increase Exam"
-                      >
-                        ▲
-                      </button>
-                      <button
-                        className="arrow-btn down-btn"
-                        onClick={() => handleArrowKeyScore(pupil.id, subjectIndex, 'exam', 'down', subject_data.exam)}
-                        title="Decrease Exam"
-                      >
-                        ▼
-                      </button>
-                    </div>
                   </div>
                 </td>
                 <td className="total-col">
