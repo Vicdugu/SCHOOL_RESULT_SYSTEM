@@ -98,17 +98,6 @@ export const exportPupilResult = async (
       : '0';
 
     // ============ HEADER SECTION ============
-    // School name at the very top
-    children.push(
-      new Paragraph({
-        children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 48, bold: true })],
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 100 }
-      })
-    );
-
-    // Create header with logo on left and report sheet title on right
-    // School name and logo in a table for layout
     // Define bold border style for header and info tables
     const boldBorder = {
       style: BorderStyle.SINGLE,
@@ -125,17 +114,26 @@ export const exportPupilResult = async (
       insideVertical: boldBorder
     };
 
-    const headerTable = new Table({
+    // Nested table for logo and school name side-by-side (no borders)
+    const noBorder = {
+      top: { style: BorderStyle.NONE, size: 0 },
+      bottom: { style: BorderStyle.NONE, size: 0 },
+      left: { style: BorderStyle.NONE, size: 0 },
+      right: { style: BorderStyle.NONE, size: 0 },
+      insideHorizontal: { style: BorderStyle.NONE, size: 0 },
+      insideVertical: { style: BorderStyle.NONE, size: 0 }
+    };
+
+    const logoNameTable = new Table({
       rows: [
         new TableRow({
           children: [
-            // Left cell: Logo and address
+            // Logo cell
             new TableCell({
-              width: { size: 50, type: WidthType.PERCENTAGE },
-              borders: boldBorders,
-              margins: { top: 60, bottom: 60, left: 80, right: 80 },
+              width: { size: 30, type: WidthType.PERCENTAGE },
+              borders: noBorder,
+              margins: { top: 0, bottom: 0, left: 0, right: 20 },
               children: [
-                // Logo paragraph
                 new Paragraph({
                   children: options.schoolLogo
                     ? [
@@ -146,14 +144,47 @@ export const exportPupilResult = async (
                         })
                       ]
                     : [],
-                  alignment: AlignmentType.CENTER,
-                  spacing: { after: 40 }
-                }),
+                  alignment: AlignmentType.LEFT,
+                  spacing: { after: 0 }
+                })
+              ]
+            }),
+            // School name cell
+            new TableCell({
+              width: { size: 70, type: WidthType.PERCENTAGE },
+              borders: noBorder,
+              margins: { top: 0, bottom: 0, left: 0, right: 0 },
+              children: [
+                new Paragraph({
+                  children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })],
+                  alignment: AlignmentType.LEFT,
+                  spacing: { after: 0 }
+                })
+              ]
+            })
+          ]
+        })
+      ],
+      width: { size: 100, type: WidthType.PERCENTAGE }
+    });
+
+    const headerTable = new Table({
+      rows: [
+        new TableRow({
+          children: [
+            // Left cell: Logo, school name (nested table) and address
+            new TableCell({
+              width: { size: 50, type: WidthType.PERCENTAGE },
+              borders: boldBorders,
+              margins: { top: 60, bottom: 60, left: 80, right: 80 },
+              children: [
+                // Nested table with logo and school name
+                logoNameTable,
                 // Address paragraph
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 18 })],
-                  alignment: AlignmentType.CENTER,
-                  spacing: { before: 0 }
+                  alignment: AlignmentType.LEFT,
+                  spacing: { before: 40 }
                 })
               ]
             }),
