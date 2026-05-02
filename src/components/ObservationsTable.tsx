@@ -42,52 +42,105 @@ const ObservationsTable: React.FC<ObservationsTableProps> = ({ pupils = [], onOb
     <div className="observations-container">
       <h3 className="observations-title">Affective & Psychomotor Observations (Behavioral & Physical Abilities)</h3>
       
-      {Object.entries(ATTRIBUTES).map(([category, attributes]) => (
-        <div key={category} className="category-section">
-          <h4 className="category-name">{category}</h4>
-          <div className="observations-wrapper">
-            <table className="observations-table">
-              <thead>
-                <tr>
-                  <th className="attribute-name-col">Attribute</th>
-                  {pupilsWithNames.map(pupil => (
-                    <th key={pupil.id} className="pupil-col">
-                      {pupil.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {attributes.map(attribute => (
-                  <tr key={attribute}>
-                    <td className="attribute-name-col">{attribute}</td>
-                    {pupilsWithNames.map(pupil => {
-                      const value = pupil.observations?.[attribute] || 0;
-                      return (
-                        <td key={`${pupil.id}-${attribute}`} className="rating-cell">
-                          <select
-                            value={value}
-                            onChange={(e) => onObservationChange(pupil.id, attribute, Number(e.target.value))}
-                            className="rating-select"
-                            title={`${attribute}: Select rating`}
-                          >
-                            <option value={0}>-</option>
-                            <option value={5}>5</option>
-                            <option value={4}>4</option>
-                            <option value={3}>3</option>
-                            <option value={2}>2</option>
-                            <option value={1}>1</option>
-                          </select>
-                        </td>
-                      );
-                    })}
+      {/* Row 1: Classroom and Psychological side by side */}
+      <div className="observations-row">
+        {['Classroom', 'Psychological'].map(category => (
+          <div key={category} className="category-section category-col">
+            <h4 className="category-name">{category}</h4>
+            <div className="observations-wrapper">
+              <table className="observations-table">
+                <thead>
+                  <tr>
+                    <th className="attribute-name-col">Attribute</th>
+                    {pupilsWithNames.map(pupil => (
+                      <th key={pupil.id} className="pupil-col">
+                        {pupil.name}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {ATTRIBUTES[category as keyof typeof ATTRIBUTES].map(attribute => (
+                    <tr key={attribute}>
+                      <td className="attribute-name-col">{attribute}</td>
+                      {pupilsWithNames.map(pupil => {
+                        const value = pupil.observations?.[attribute] || 0;
+                        return (
+                          <td key={`${pupil.id}-${attribute}`} className="rating-cell">
+                            <select
+                              value={value}
+                              onChange={(e) => onObservationChange(pupil.id, attribute, Number(e.target.value))}
+                              className="rating-select"
+                              title={`${attribute}: Select rating`}
+                            >
+                              <option value={0}>-</option>
+                              <option value={5}>5</option>
+                              <option value={4}>4</option>
+                              <option value={3}>3</option>
+                              <option value={2}>2</option>
+                              <option value={1}>1</option>
+                            </select>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {/* Row 2: Social and Physical side by side */}
+      <div className="observations-row">
+        {['Social', 'Physical'].map(category => (
+          <div key={category} className="category-section category-col">
+            <h4 className="category-name">{category}</h4>
+            <div className="observations-wrapper">
+              <table className="observations-table">
+                <thead>
+                  <tr>
+                    <th className="attribute-name-col">Attribute</th>
+                    {pupilsWithNames.map(pupil => (
+                      <th key={pupil.id} className="pupil-col">
+                        {pupil.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {ATTRIBUTES[category as keyof typeof ATTRIBUTES].map(attribute => (
+                    <tr key={attribute}>
+                      <td className="attribute-name-col">{attribute}</td>
+                      {pupilsWithNames.map(pupil => {
+                        const value = pupil.observations?.[attribute] || 0;
+                        return (
+                          <td key={`${pupil.id}-${attribute}`} className="rating-cell">
+                            <select
+                              value={value}
+                              onChange={(e) => onObservationChange(pupil.id, attribute, Number(e.target.value))}
+                              className="rating-select"
+                              title={`${attribute}: Select rating`}
+                            >
+                              <option value={0}>-</option>
+                              <option value={5}>5</option>
+                              <option value={4}>4</option>
+                              <option value={3}>3</option>
+                              <option value={2}>2</option>
+                              <option value={1}>1</option>
+                            </select>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="rating-legend">
         <h4>Rating Scale:</h4>
