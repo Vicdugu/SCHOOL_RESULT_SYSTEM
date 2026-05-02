@@ -330,6 +330,13 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
   };
 
   const handleAddPupil = () => {
+    // Only admins can add pupils
+    if (userRole !== 'admin') {
+      setToastMessage('❌ Only admins can add pupils');
+      setTimeout(() => setToastMessage(''), 3000);
+      return;
+    }
+    
     const newPupil: PupilResult = {
       id: `pupil-${Date.now()}`,
       name: '',
@@ -798,11 +805,13 @@ const ResultTabContent: React.FC<ResultTabContentProps> = ({
             onProfileClick={setSelectedPupilId}
             subject={currentSubject}
           />
-          <div className="add-pupil-section">
-            <button onClick={handleAddPupil} className="add-pupil-btn">
-              ➕ Add Pupil Row
-            </button>
-          </div>
+          {userRole === 'admin' && (
+            <div className="add-pupil-section">
+              <button onClick={handleAddPupil} className="add-pupil-btn">
+                ➕ Add Pupil Row
+              </button>
+            </div>
+          )}
 
           {/* Student Selector and Per-Student Behavior Editor */}
           <div className="behavior-editor-section">
