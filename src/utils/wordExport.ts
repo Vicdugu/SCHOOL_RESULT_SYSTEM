@@ -284,12 +284,22 @@ export const exportPupilResult = async (
           new TableCell({
             shading: { fill: '1F4E78' },
             margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Max CA', bold: true, size: 16, color: 'FFFFFF' })] })]
+          }),
+          new TableCell({
+            shading: { fill: '1F4E78' },
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
             children: [new Paragraph({ children: [new TextRun({ text: 'CA1', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
             margins: { top: 40, bottom: 40, left: 60, right: 60 },
             children: [new Paragraph({ children: [new TextRun({ text: 'CA2', bold: true, size: 16, color: 'FFFFFF' })] })]
+          }),
+          new TableCell({
+            shading: { fill: '1F4E78' },
+            margins: { top: 40, bottom: 40, left: 60, right: 60 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Max Exam', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
@@ -371,12 +381,22 @@ export const exportPupilResult = async (
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: '20', bold: true, size: 16 })] })] 
+            }),
+            new TableCell({ 
+              shading: { fill: rowBgColor },
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca1 === 0 ? '-' : subject.ca1.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
               children: [new Paragraph({ children: [new TextRun({ text: subject.ca2 === 0 ? '-' : subject.ca2.toString(), size: 16 })] })] 
+            }),
+            new TableCell({ 
+              shading: { fill: rowBgColor },
+              margins: { top: 60, bottom: 60, left: 60, right: 60 },
+              children: [new Paragraph({ children: [new TextRun({ text: '60', bold: true, size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },

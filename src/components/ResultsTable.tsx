@@ -146,8 +146,10 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                 )}
               </span>
             </th>
+            <th className="score-col">Max CA Score</th>
             <th className="score-col">CA1 (20)</th>
             <th className="score-col">CA2 (20)</th>
+            <th className="score-col">Max Exam Score</th>
             <th className="score-col">Exam (60)</th>
             <th className="total-col">Total (100)</th>
             <th className="grade-col">Grade</th>
@@ -202,6 +204,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                   />
                 </td>
                 <td className="score-col">
+                  <span className="max-score">20</span>
+                </td>
+                <td className="score-col">
                   <div className="score-input-wrapper">
                     <input
                       type="number"
@@ -248,6 +253,9 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ pupils, subjectIndex, subje
                       className="score-input"
                     />
                   </div>
+                </td>
+                <td className="score-col">
+                  <span className="max-score">60</span>
                 </td>
                 <td className="score-col">
                   <div className="score-input-wrapper">

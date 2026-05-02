@@ -97,6 +97,18 @@
   text-align: center;
 }
 
+.max-score {
+  display: inline-block;
+  min-width: 32px;
+  padding: 6px 10px;
+  background-color: #f0f4ff;
+  color: #667eea;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
 .total-col {
   width: 90px;
   text-align: center;
