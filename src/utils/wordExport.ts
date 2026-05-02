@@ -289,12 +289,12 @@ export const exportPupilResult = async (
           new TableCell({
             shading: { fill: '1F4E78' },
             margins: { top: 40, bottom: 40, left: 60, right: 60 },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA1 (20)', bold: true, size: 16, color: 'FFFFFF' })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA1', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
             margins: { top: 40, bottom: 40, left: 60, right: 60 },
-            children: [new Paragraph({ children: [new TextRun({ text: 'CA2 (20)', bold: true, size: 16, color: 'FFFFFF' })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'CA2', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
@@ -304,7 +304,7 @@ export const exportPupilResult = async (
           new TableCell({
             shading: { fill: '1F4E78' },
             margins: { top: 40, bottom: 40, left: 60, right: 60 },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Exam (60)', bold: true, size: 16, color: 'FFFFFF' })] })]
+            children: [new Paragraph({ children: [new TextRun({ text: 'Exam', bold: true, size: 16, color: 'FFFFFF' })] })]
           }),
           new TableCell({
             shading: { fill: '1F4E78' },
