@@ -1,4 +1,4 @@
-import { Document, Packer, Paragraph, Table, TableCell, TableRow, WidthType, TextRun, AlignmentType, BorderStyle, ImageRun, ShadingType } from 'docx';
+import { Document, Packer, Paragraph, Table, TableCell, TableRow, WidthType, TextRun, AlignmentType, BorderStyle, ImageRun } from 'docx';
 
 interface SubjectResult {
   name: string;
@@ -125,10 +125,6 @@ export const exportPupilResult = async (
               width: { size: 50, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 60, bottom: 60, left: 80, right: 80 },
-              shading: {
-                type: ShadingType.CLEAR,
-                color: 'FFFACD'  // Pale gold background
-              },
               children: [
                 // Logo and school name in a nested structure
                 new Paragraph({
@@ -164,7 +160,7 @@ export const exportPupilResult = async (
               margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
                 new Paragraph({
-                  children: [new TextRun({ text: options.reportSheetTitle || 'REPORT SHEET', size: 44, bold: true, color: '1F4E78' })],
+                  children: [new TextRun({ text: options.reportSheetTitle || 'REPORT SHEET', size: 44, bold: true, color: '000000' })],
                   alignment: AlignmentType.CENTER,
                   spacing: { before: 100, after: 100 }
                 })
