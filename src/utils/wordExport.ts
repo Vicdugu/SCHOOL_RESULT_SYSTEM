@@ -98,7 +98,16 @@ export const exportPupilResult = async (
       : '0';
 
     // ============ HEADER SECTION ============
-    // Create header with logo on right and school name on left (same line)
+    // School name at the very top
+    children.push(
+      new Paragraph({
+        children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 48, bold: true })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 100 }
+      })
+    );
+
+    // Create header with logo on left and report sheet title on right
     // School name and logo in a table for layout
     // Define bold border style for header and info tables
     const boldBorder = {
@@ -120,34 +129,31 @@ export const exportPupilResult = async (
       rows: [
         new TableRow({
           children: [
-            // Left cell: Logo + School name and address
+            // Left cell: Logo and address
             new TableCell({
               width: { size: 50, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
-                // Logo and school name in a nested structure
+                // Logo paragraph
                 new Paragraph({
-                  children: [
-                    ...(options.schoolLogo
-                      ? [
-                          new ImageRun({
-                            data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
-                            transformation: { width: 70, height: 70 },
-                            type: 'png'
-                          }),
-                          new TextRun({ text: '  ' })
-                        ]
-                      : []),
-                    new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })
-                  ],
-                  alignment: AlignmentType.LEFT,
-                  spacing: { after: 0 }
+                  children: options.schoolLogo
+                    ? [
+                        new ImageRun({
+                          data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
+                          transformation: { width: 70, height: 70 },
+                          type: 'png'
+                        })
+                      ]
+                    : [],
+                  alignment: AlignmentType.CENTER,
+                  spacing: { after: 40 }
                 }),
+                // Address paragraph
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 18 })],
-                  alignment: AlignmentType.LEFT,
-                  spacing: { before: 40 }
+                  alignment: AlignmentType.CENTER,
+                  spacing: { before: 0 }
                 })
               ]
             }),
