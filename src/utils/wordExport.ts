@@ -30,6 +30,7 @@ interface ExportOptions {
   schoolName?: string;
   schoolAddress?: string;
   schoolLogo?: string; // Base64 encoded image
+  reportSheetTitle?: string; // Title like "BASIC PRIMARY 2025/26 2nd TERM REPORT SHEET"
   term?: string;
   academicYear?: string;
   classTeacher?: string;
@@ -119,42 +120,51 @@ export const exportPupilResult = async (
       rows: [
         new TableRow({
           children: [
-            // Left cell: School name and address
+            // Left cell: Logo + School name and address
             new TableCell({
-              width: { size: 70, type: WidthType.PERCENTAGE },
+              width: { size: 50, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 60, bottom: 60, left: 80, right: 80 },
               children: [
+                // Logo and school name in a nested structure
+                new Paragraph({
+                  children: options.schoolLogo
+                    ? [
+                        new ImageRun({
+                          data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
+                          transformation: { width: 70, height: 70 },
+                          type: 'png'
+                        }),
+                        new TextRun({ text: '  ' })
+                      ]
+                    : [],
+                  alignment: AlignmentType.LEFT,
+                  spacing: { after: 0 }
+                }),
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolName || 'SCHOOL NAME', size: 44, bold: true })],
-                  alignment: AlignmentType.LEFT
+                  alignment: AlignmentType.LEFT,
+                  spacing: { before: options.schoolLogo ? 0 : 60, after: 0 }
                 }),
                 new Paragraph({
                   children: [new TextRun({ text: options.schoolAddress || 'School Address', size: 18 })],
                   alignment: AlignmentType.LEFT,
-                  spacing: { before: 60 }
+                  spacing: { before: 40 }
                 })
               ]
             }),
-            // Right cell: Logo
+            // Right cell: Report sheet title
             new TableCell({
-              width: { size: 30, type: WidthType.PERCENTAGE },
+              width: { size: 50, type: WidthType.PERCENTAGE },
               borders: boldBorders,
               margins: { top: 60, bottom: 60, left: 80, right: 80 },
-              children: options.schoolLogo
-                ? [
-                    new Paragraph({
-                      alignment: AlignmentType.RIGHT,
-                      children: [
-                        new ImageRun({
-                          data: options.schoolLogo.replace(/^data:image\/\w+;base64,/, ''),
-                          transformation: { width: 100, height: 100 },
-                          type: 'png'
-                        })
-                      ]
-                    })
-                  ]
-                : [new Paragraph({ text: '' })]
+              children: [
+                new Paragraph({
+                  children: [new TextRun({ text: options.reportSheetTitle || 'REPORT SHEET', size: 48, bold: true, color: '1F4E78' })],
+                  alignment: AlignmentType.CENTER,
+                  spacing: { before: 100, after: 100 }
+                })
+              ]
             })
           ]
         })

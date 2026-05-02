@@ -6,6 +6,7 @@ import './SchoolHeader.css';
 interface SchoolInfo {
   name: string;
   address: string; // School address
+  reportSheetTitle: string; // Report sheet title (e.g., "BASIC PRIMARY 2025/26 2nd TERM REPORT SHEET")
   logo: string | null; // Base64 encoded image
   backgroundImage: string | null; // Base64 encoded background image
 }
@@ -17,13 +18,15 @@ const SchoolHeader: React.FC = () => {
   
   const [schoolInfo, setSchoolInfo] = useState<SchoolInfo>(() => {
     const stored = localStorage.getItem('school-info');
-    return stored ? JSON.parse(stored) : { name: 'Your School Name', address: 'School Address', logo: null, backgroundImage: null };
+    return stored ? JSON.parse(stored) : { name: 'Your School Name', address: 'School Address', reportSheetTitle: 'BASIC PRIMARY 2025/26 2nd TERM REPORT SHEET', logo: null, backgroundImage: null };
   });
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(schoolInfo.name);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [tempAddress, setTempAddress] = useState(schoolInfo.address);
+  const [isEditingReportSheetTitle, setIsEditingReportSheetTitle] = useState(false);
+  const [tempReportSheetTitle, setTempReportSheetTitle] = useState(schoolInfo.reportSheetTitle);
   const [uploadMessage, setUploadMessage] = useState('');
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [imageToBeProcessed, setImageToBeProcessed] = useState<string | null>(null);
@@ -43,6 +46,10 @@ const SchoolHeader: React.FC = () => {
     setTempAddress(e.target.value);
   };
 
+  const handleReportSheetTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempReportSheetTitle(e.target.value);
+  };
+
   const handleSaveName = () => {
     if (!isMasterAdmin) return; // Only master admin can save
     if (tempName.trim()) {
@@ -59,6 +66,14 @@ const SchoolHeader: React.FC = () => {
     }
   };
 
+  const handleSaveReportSheetTitle = () => {
+    if (!isMasterAdmin) return; // Only master admin can save
+    if (tempReportSheetTitle.trim()) {
+      setSchoolInfo({ ...schoolInfo, reportSheetTitle: tempReportSheetTitle.trim() });
+      setIsEditingReportSheetTitle(false);
+    }
+  };
+
   const handleEditClick = () => {
     if (!isMasterAdmin) return; // Only master admin can edit
     setIsEditingName(true);
@@ -69,6 +84,12 @@ const SchoolHeader: React.FC = () => {
     if (!isMasterAdmin) return; // Only master admin can edit
     setIsEditingAddress(true);
     setTempAddress(schoolInfo.address);
+  };
+
+  const handleEditReportSheetTitleClick = () => {
+    if (!isMasterAdmin) return; // Only master admin can edit
+    setIsEditingReportSheetTitle(true);
+    setTempReportSheetTitle(schoolInfo.reportSheetTitle);
   };
 
   const handleLogoClick = () => {
@@ -355,6 +376,48 @@ const SchoolHeader: React.FC = () => {
                     onClick={handleEditAddressClick}
                     className="edit-address-btn"
                     title="Edit school address"
+                  >
+                    ✏️
+                  </button>
+                )}
+              </div>
+            )}
+            {/* Report Sheet Title Section */}
+            {isEditingReportSheetTitle ? (
+              <div className="address-edit-container">
+                <input
+                  type="text"
+                  value={tempReportSheetTitle}
+                  onChange={handleReportSheetTitleChange}
+                  className="school-address-input"
+                  placeholder="Enter report sheet title"
+                  autoFocus
+                />
+                <button
+                  onClick={handleSaveReportSheetTitle}
+                  className="save-btn-small"
+                  title="Save report sheet title"
+                >
+                  ✓ Save
+                </button>
+                <button
+                  onClick={() => setIsEditingReportSheetTitle(false)}
+                  className="cancel-btn-small"
+                  title="Cancel editing"
+                >
+                  ✕ Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="address-display-container">
+                <p className="school-address" style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+                  📄 {schoolInfo.reportSheetTitle}
+                </p>
+                {isMasterAdmin && (
+                  <button
+                    onClick={handleEditReportSheetTitleClick}
+                    className="edit-address-btn"
+                    title="Edit report sheet title"
                   >
                     ✏️
                   </button>
