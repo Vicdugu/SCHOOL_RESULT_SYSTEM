@@ -41,7 +41,12 @@ interface ExportOptions {
   nextTermBegins?: string;
 }
 
-const calculateGrade = (total: number): string => {
+const isScoreEntered = (ca1: number, ca2: number, exam: number): boolean => {
+  return ca1 > 0 || ca2 > 0 || exam > 0;
+};
+
+const calculateGrade = (total: number, ca1: number, ca2: number, exam: number): string => {
+  if (!isScoreEntered(ca1, ca2, exam)) return '-';
   if (total >= 70) return 'A';
   if (total >= 60) return 'B';
   if (total >= 50) return 'C';
@@ -50,8 +55,9 @@ const calculateGrade = (total: number): string => {
   return 'F';
 };
 
-const calculateRemark = (total: number): string => {
-  const grade = calculateGrade(total);
+const calculateRemark = (total: number, ca1: number, ca2: number, exam: number): string => {
+  if (!isScoreEntered(ca1, ca2, exam)) return '-';
+  const grade = calculateGrade(total, ca1, ca2, exam);
   switch (grade) {
     case 'A':
       return 'Exceptional';
@@ -271,8 +277,9 @@ export const exportPupilResult = async (
 
     // Add subject rows with alternating colors
     pupil.subjects.forEach((subject, index) => {
-      const grade = calculateGrade(subject.total);
-      const remark = calculateRemark(subject.total);
+      const hasScore = isScoreEntered(subject.ca1, subject.ca2, subject.exam);
+      const grade = calculateGrade(subject.total, subject.ca1, subject.ca2, subject.exam);
+      const remark = calculateRemark(subject.total, subject.ca1, subject.ca2, subject.exam);
       
       // Determine row background color (alternating)
       const rowBgColor = index % 2 === 0 ? 'FFFFFF' : 'E7F0F7';
@@ -302,6 +309,9 @@ export const exportPupilResult = async (
           gradeBgColor = 'E74C3C';
           gradeTextColor = 'FFFFFF';
           break;
+        default:
+          gradeBgColor = 'FFFFFF';
+          gradeTextColor = '000000';
       }
       
       resultRows.push(
@@ -316,22 +326,22 @@ export const exportPupilResult = async (
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.ca1.toString(), size: 16 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: subject.ca1 === 0 ? '-' : subject.ca1.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.ca2.toString(), size: 16 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: subject.ca2 === 0 ? '-' : subject.ca2.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.exam.toString(), size: 16 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: subject.exam === 0 ? '-' : subject.exam.toString(), size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.total.toString(), bold: true, size: 16 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: hasScore ? subject.total.toString() : '-', bold: true, size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: gradeBgColor },
@@ -341,7 +351,7 @@ export const exportPupilResult = async (
             new TableCell({ 
               shading: { fill: rowBgColor },
               margins: { top: 60, bottom: 60, left: 60, right: 60 },
-              children: [new Paragraph({ children: [new TextRun({ text: subject.rank.toString(), size: 16 })] })] 
+              children: [new Paragraph({ children: [new TextRun({ text: hasScore ? (subject.rank ? subject.rank.toString() : '-') : '-', size: 16 })] })] 
             }),
             new TableCell({ 
               shading: { fill: rowBgColor },
