@@ -408,21 +408,7 @@ export const exportPupilResult = async (
       );
     });
 
-    // Borders for result table - remove horizontal lines
-    const resultTableBorders = {
-      top: { style: BorderStyle.SINGLE, size: 24, color: '000000' },
-      bottom: { style: BorderStyle.SINGLE, size: 24, color: '000000' },
-      left: { style: BorderStyle.SINGLE, size: 24, color: '000000' },
-      right: { style: BorderStyle.SINGLE, size: 24, color: '000000' },
-      insideHorizontal: { style: BorderStyle.NONE, size: 0 },
-      insideVertical: { style: BorderStyle.SINGLE, size: 24, color: '000000' }
-    };
-
-    children.push(new Table({ 
-      rows: resultRows, 
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      borders: resultTableBorders
-    }));
+    children.push(new Table({ rows: resultRows, width: { size: 100, type: WidthType.PERCENTAGE } }));
     children.push(new Paragraph(''));
 
     // ============ AFFECTIVE & PSYCHOMOTOR OBSERVATIONS ============
