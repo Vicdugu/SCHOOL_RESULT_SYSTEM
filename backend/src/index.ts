@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import cors from 'express-cors';
+import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
@@ -66,6 +66,12 @@ declare global {
       schoolId?: string;
       userId?: string;
       userRole?: string;
+      user?: {
+        id: string;
+        school_id: string;
+        email: string;
+        role: 'admin' | 'teacher' | 'auditor';
+      };
     }
   }
 }
@@ -131,30 +137,23 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// API v1 routes (to be implemented)
-app.use('/api/v1/auth', (req, res) => {
-  res.json({ message: 'Auth routes coming soon' });
-});
+// Import route creators
+import { createAuthRoutes } from './routes/auth';
+import { createSchoolsRoutes } from './routes/schools';
+import { createUsersRoutes } from './routes/users';
+import { createClassesRoutes } from './routes/classes';
+import { createPupilsRoutes } from './routes/pupils';
+import { createSubjectsRoutes } from './routes/subjects';
+import { createResultsRoutes } from './routes/results';
 
-app.use('/api/v1/schools', (req, res) => {
-  res.json({ message: 'School management routes coming soon' });
-});
-
-app.use('/api/v1/users', (req, res) => {
-  res.json({ message: 'User management routes coming soon' });
-});
-
-app.use('/api/v1/classes', (req, res) => {
-  res.json({ message: 'Class management routes coming soon' });
-});
-
-app.use('/api/v1/pupils', (req, res) => {
-  res.json({ message: 'Pupil management routes coming soon' });
-});
-
-app.use('/api/v1/results', (req, res) => {
-  res.json({ message: 'Results management routes coming soon' });
-});
+// API v1 routes
+app.use('/api/v1/auth', createAuthRoutes(pgPool));
+app.use('/api/v1/schools', createSchoolsRoutes(pgPool));
+app.use('/api/v1/users', createUsersRoutes(pgPool));
+app.use('/api/v1/classes', createClassesRoutes(pgPool));
+app.use('/api/v1/pupils', createPupilsRoutes(pgPool));
+app.use('/api/v1/subjects', createSubjectsRoutes(pgPool));
+app.use('/api/v1/results', createResultsRoutes(pgPool));
 
 // 404 handler
 app.use((req: Request, res: Response) => {
