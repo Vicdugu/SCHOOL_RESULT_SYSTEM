@@ -236,6 +236,34 @@
   font-weight: 600;
 }
 
+.register-link-text {
+  color: #666 !important;
+  font-size: 13px;
+  margin: 12px 0 !important;
+}
+
+.register-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: inherit;
+  padding: 0;
+  font-family: inherit;
+}
+
+.register-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.register-link:active {
+  transform: scale(0.98);
+}
+
 /* Forgot Password Link */
 .forgot-password-link {
   background: none;

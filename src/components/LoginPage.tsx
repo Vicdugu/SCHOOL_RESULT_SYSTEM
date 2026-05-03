@@ -171,6 +171,16 @@ const LoginPage: React.FC = () => {
 
         <div className="login-footer">
           <p>Contact your administrator for access credentials.</p>
+          <p className="register-link-text">
+            Don't have an account?{' '}
+            <button
+              type="button"
+              onClick={() => navigate('/register')}
+              className="register-link"
+            >
+              Register your school
+            </button>
+          </p>
           <p className="created-by">Created by Questbridge Consulting, UK</p>
         </div>
       </div>
